@@ -26,6 +26,7 @@ class MyApp < Sinatra::Application
     env['warden'].authenticate!
     @ssh_key = SshKey.get(params[:id])
     @active_tab = "keys"
+    redirect "/keys", :error => "This key doesn't belong to you." unless @ssh_key.user.id == env['warden'].user.id
     haml "keys/show".to_sym
   end
 
@@ -33,6 +34,7 @@ class MyApp < Sinatra::Application
     env['warden'].authenticate!
     @ssh_key = SshKey.get(params[:id])
     @active_tab = "keys"
+    redirect "/keys", :error => "This key doesn't belong to you." unless @ssh_key.user.id == env['warden'].user.id
     haml "keys/edit".to_sym
   end
 
@@ -40,9 +42,10 @@ class MyApp < Sinatra::Application
     env['warden'].authenticate!
     redirect "/keys/#{params[:id]}/edit", :error => "invalid key" unless SshKey.valid?(params[:ssh_key])
     ssh_key = SshKey.get(params[:id])
+    redirect "/keys", :error => "This key doesn't belong to you." unless @ssh_key.user.id == env['warden'].user.id
     ssh_key.name = params[:name]
     ssh_key.ssh_key = params[:ssh_key]
     ssh_key.save
-    redirect "/keys/", :notice => "key updated."
+    redirect "/keys", :notice => "key updated."
   end
 end

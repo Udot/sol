@@ -9,6 +9,7 @@ require_relative 'egg'
 require_relative 'key'
 require_relative 'server'
 require_relative 'api_user'
+require_relative 'mercure_api'
 
 DataMapper.finalize
 DataMapper.auto_upgrade!

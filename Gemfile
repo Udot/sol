@@ -12,6 +12,7 @@ gem 'ruby-mysql', "2.9.3"
 group :production do
   gem "pg"
 end
+#gem "resque"
 gem "redis"
 gem "data_mapper"
 gem "dm-mysql-adapter"

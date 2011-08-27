@@ -1,0 +1,25 @@
+%div.row
+  %div.span12.columns
+    %h2 Edit your egg
+%div.row
+  %div.span6.columns
+    %form{:action => "/eggs/#{@egg.id}/update", :method => "post"}
+      %fieldset
+        %legend Enter the key details
+        .clearfix
+          %label{:for => ""} Name
+          .input
+            %input{:name => "name", :type => "text", :value => @egg.name}/
+        / /clearfix
+        .clearfix
+          %label{:for => ""} Path (git repository)
+          .input
+            %input.uneditable-input{:name => "path", :type => "text", :value => @egg.git_repository.remote_url}/
+            %span.help-block
+              This cannot be edited
+        / /clearfix
+        
+        .actions
+          %button#submit_user.btn.primary{:type => "submit"}> Update
+          \ 
+          %button.btn{:type => "reset"} Cancel

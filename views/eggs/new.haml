@@ -1,0 +1,21 @@
+%div.row
+  %div.span12.columns
+    %h2 Add an egg
+
+%div.row
+  %div.span6.columns
+    %form{:action => "/eggs", :method => "post"}
+      %fieldset
+        %legend Enter the egg details
+        .clearfix
+          %label{:for => ""} Name
+          .input
+            %input{:name => "name", :type => "text"}/
+            %span.help-block
+              This name will also be used to create the git repository name and path.
+        / /clearfix
+        
+        .actions
+          %button#submit_user.btn.primary{:type => "submit"}> Create
+          \ 
+          %button.btn{:type => "reset"} Cancel

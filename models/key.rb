@@ -42,6 +42,17 @@ class SshKey
   end
 
   # class method
+  # export all stored keys
+  def self.export
+    auth_file = ""
+    options = ["no-port-forwarding", "no-X11-forwarding", "no-agent-forwarding"].join(",")
+    SshKey.each do |key|
+      command = "command=\"#{Settings.shell.path} #{key.user.login}\""
+      auth_file += "#{command},#{options} #{key.short}\n"
+    end
+    return auth_file
+  end
+  
   # validity check
   def self.valid?(a_key)
     if a_key

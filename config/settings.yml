@@ -3,15 +3,22 @@ jup_sh:
   user_name: jup_git
   environment: production
 repos:
-  root_dir: /tmp
+  root_dir: /tmp/gits
   repo_user: jup_git
 git:
   repo_path: git
-  have_public_clone: true # global public clone ?
+  host: localhost
   shell: /opt/local/bin/git-shell
 shell:
-  path: vendor/jup_sh/jupiler-sh.rb
+  path: /var/opt/jupiler/jupiler-sh.rb
 logs:
   email: email.log
   scm: scm.log
   jup_sh: jup_sh.log
+mercure_api:
+  token: a1c116090cae590788ae2b9421ef7dd7263a5ac8
+  username: jupiter_sands
+  ssl: false
+  host: localhost
+  port: 8082
+  

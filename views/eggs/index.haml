@@ -1,1 +1,24 @@
-test
+%div.row
+  %div.span12.columns
+    %h2 Eggs
+    %legend Manage your eggs
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th Name
+          %th Status
+          %th Repository
+          %th
+            %a{:href => "/eggs/new"}
+              %img{:src => "/img/plus.png", :height => "20px"}
+      - if @eggs.count > 0
+        - @eggs.each do |egg|
+          %tbody
+            %tr
+              %td= egg.name
+              %td NC
+              %td= egg.git_repository.remote_url if egg.git_repository
+              %td
+                %a{:href => "/eggs/#{egg.id}"} Show
+                %a{:href => "/eggs/#{egg.id}/edit"} Edit
+                %a{:href => "/eggs/#{egg.id}/destroy"} Destroy
