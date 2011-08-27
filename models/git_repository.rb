@@ -25,8 +25,10 @@ class GitRepository
   end
 
   def remote_setup
-    request = MercuryApi.create(user.login, path)
-    return true if request[0] == 200
+    request = MercureApi.create(user.login, path)
+    if request != nil
+      return true if request[0] == "200"
+    end
     return false
   end
 end
