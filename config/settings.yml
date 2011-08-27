@@ -1,0 +1,17 @@
+jup_sh:
+  user_home: /tmp
+  user_name: jup_git
+  environment: production
+repos:
+  root_dir: /tmp
+  repo_user: jup_git
+git:
+  repo_path: git
+  have_public_clone: true # global public clone ?
+  shell: /opt/local/bin/git-shell
+shell:
+  path: vendor/jup_sh/jupiler-sh.rb
+logs:
+  email: email.log
+  scm: scm.log
+  jup_sh: jup_sh.log

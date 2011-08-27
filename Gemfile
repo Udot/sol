@@ -14,7 +14,10 @@ gem "redis"
 gem "data_mapper"
 gem "dm-mysql-adapter"
 
+gem "rails_config"
+
 gem "haml"
+#gem "less"
 
 gem "shoulda", "2.11.3", :group => [:development, :test]
 gem "factory_girl", ">= 1.3.3", :group => [:development, :test]

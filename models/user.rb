@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'bcrypt'
 require 'securerandom'
+require 'digest/sha1'
 
 class User
   configure do
@@ -13,6 +14,8 @@ class User
   property :crypted_pass, String, :length => 60..60, :required => true, :writer => :protected
   property :name, String, :unique => true, :required => true, :length => 3..30, :message => "Your name must not be blank and at least 3 characters.", :unique_index => true
   property :created_at, DateTime, :default => proc { DateTime.now }
+  property :login, String, :unique => true, :required => true, :length => 4..15, :message => "Your login must not be blank and at least 4 characters long.", :unique_index => true
+  property :token, String, :unique => true, :default => proc { User.generate_token }
 
   attr_accessor :password, :password_confirmation, :password_reset
   
@@ -21,10 +24,23 @@ class User
   
   before :valid?, :crypted_pass
 
-  has n, :projects
-  has n, :sessions
+  has n, :eggs
+  has n, :ssh_keys
+  has n, :git_repositories
 
   before :valid?, :crypt_password
+
+  # API token generation
+  def self.generate_token
+    the_token = ""
+    ash = []
+    (0..9).each { |a| ash << a.to_s }
+    ("a".."z").each { |a| ash << a }
+    ("A".."Z").each { |a| ash << a }
+    4.times { ash.shuffle! }
+    30.times { the_token += ash[rand(ash.size)] }
+    return Digest::SHA1.hexdigest(Time.now.to_s + the_token)
+  end
 
   def password_required?
     new? or password_reset

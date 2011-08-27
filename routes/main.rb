@@ -110,6 +110,10 @@ eof
         uri = params['uri']
         %$login error trying to access <a href="#{uri}">#{uri}</a>. Go <a href="/">home</a> instead.$
     end
+
+    get '/test' do
+      haml "public/index".to_sym
+    end
   end
 
   class LoginManager < Sinatra::Base

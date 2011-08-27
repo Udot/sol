@@ -1,10 +1,11 @@
-class Project
+class SshKey
   include DataMapper::Resource
 
-  has n, :sessions
+  belongs_to :user
+  has n, :eggs, :through => Resource
 
   property :id, Serial
-  property :name, Text
+  property :ssh_key, Text
   property :user_id, Integer
   property :created_at, DateTime
   property :updated_at, DateTime

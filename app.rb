@@ -9,6 +9,7 @@ Bundler.require(:default)
 require_relative 'minify_resources'
 class MyApp < Sinatra::Application
 	enable :sessions
+	set :haml, :format => :html5
 
 	configure :production do
 		set :haml, { :ugly=>true }
