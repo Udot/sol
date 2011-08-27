@@ -1,0 +1,26 @@
+%div.row
+  %div.span12.columns
+    %h2 Add a ssh key
+
+%div.row
+  %div.span6.columns
+    %form{:action => "/keys", :method => "post"}
+      %fieldset
+        %legend Enter the key details
+        .clearfix
+          %label{:for => ""} Name
+          .input
+            %input{:name => "name", :type => "text"}/
+        / /clearfix
+        .clearfix
+          %label{:for => ""} Key
+          .input
+            %textarea.xxlarge{:name => "ssh_key", :rows => 5}
+            %span.help-block
+              Enter your ssh key.
+        / /clearfix
+        
+        .actions
+          %button#submit_user.btn.primary{:type => "submit"}> Create
+          \ 
+          %button.btn{:type => "reset"} Cancel

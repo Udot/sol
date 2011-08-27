@@ -1,0 +1,26 @@
+%div.row
+  %div.span12.columns
+    %h2 Edit your ssh key
+%div.row
+  %div.span6.columns
+    %form{:action => "/keys/#{@ssh_key.id}/update", :method => "post"}
+      %fieldset
+        %legend Enter the key details
+        .clearfix
+          %label{:for => ""} Name
+          .input
+            %input{:name => "name", :type => "text", :value => @ssh_key.name}/
+        / /clearfix
+        .clearfix
+          %label{:for => ""} Key
+          .input
+            %textarea.xxlarge{:name => "ssh_key", :rows => 5}
+            %span.help-block
+              Was :
+              = @ssh_key.ssh_key_nice
+        / /clearfix
+        
+        .actions
+          %button#submit_user.btn.primary{:type => "submit"}> Create
+          \ 
+          %button.btn{:type => "reset"} Cancel

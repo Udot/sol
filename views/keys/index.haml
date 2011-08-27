@@ -1,0 +1,22 @@
+%div.row
+  %div.span12.columns
+    %h2 Ssh Keys
+    %legend Manage your ssh keys
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th Name
+          %th Login
+          %th
+            %a{:href => "/keys/new"}
+              %img{:src => "/img/plus.png", :height => "20px"}
+      - if @ssh_keys.count > 0
+        - @ssh_keys.each do |key|
+          %tbody
+            %tr
+              %td= key.name
+              %td= key.login
+              %td
+                %a{:href => "/keys/#{key.id}"} Show
+                %a{:href => "/keys/#{key.id}/edit"} Edit
+                %a{:href => "/keys/#{key.id}/destroy"} Destroy
