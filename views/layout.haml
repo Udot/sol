@@ -89,4 +89,11 @@
                 - else
                   %li
                     %a{:href => "/keys"} Keys
+                - if env['warden'].user.admin?
+                  - if (@active_tab == "users")
+                    %li.active
+                      %a{:href => "/users"} Users
+                  - else
+                    %li
+                      %a{:href => "/users"} Users
         = yield

@@ -16,6 +16,7 @@ class User
   property :created_at, DateTime, :default => proc { DateTime.now }
   property :login, String, :unique => true, :required => true, :length => 4..15, :message => "Your login must not be blank and at least 4 characters long.", :unique_index => true
   property :token, String, :unique => true, :default => proc { User.generate_token }
+  property :role, String, :default => proc { User.default_role }
 
   attr_accessor :password, :password_confirmation, :password_reset
   
@@ -29,18 +30,6 @@ class User
   has n, :git_repositories
 
   before :valid?, :crypt_password
-
-  # API token generation
-  def self.generate_token
-    the_token = ""
-    ash = []
-    (0..9).each { |a| ash << a.to_s }
-    ("a".."z").each { |a| ash << a }
-    ("A".."Z").each { |a| ash << a }
-    4.times { ash.shuffle! }
-    30.times { the_token += ash[rand(ash.size)] }
-    return Digest::SHA1.hexdigest(Time.now.to_s + the_token)
-  end
 
   def password_required?
     new? or password_reset
@@ -72,6 +61,40 @@ class User
     crypted_pass == password
   end
 
+  # role check
+  def is_admin?
+    return true if role == "admin"
+    return false
+  end
+  alias_method :admin?, :is_admin?
+  
+  def is_normal?
+    return true if role == "normal"
+    return false
+  end
+  alias_method :normal?, :is_normal? 
+
+
+  ## Class methods
+  # API token generation
+  def self.generate_token
+    the_token = ""
+    ash = []
+    (0..9).each { |a| ash << a.to_s }
+    ("a".."z").each { |a| ash << a }
+    ("A".."Z").each { |a| ash << a }
+    4.times { ash.shuffle! }
+    30.times { the_token += ash[rand(ash.size)] }
+    return Digest::SHA1.hexdigest(Time.now.to_s + the_token)
+  end
+
+  # setting default role
+  def self.default_role
+    return "admin" if User.all.count == 1
+    return "normal"
+  end
+  
+  # authentication
   def self.authenticate(username, password)
     un = username.to_s.downcase
     u = first(:conditions => ['lower(email) = ?', un])

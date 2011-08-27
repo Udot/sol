@@ -1,0 +1,21 @@
+%div.row
+  %div.span12.columns
+    %h2
+      = @user.name
+      - if (env['warden'].user.admin? || (@user.id == env['warden'].user.id))
+        %small
+          %a{:href => "/users/#{@user.id}/edit"} edit
+
+    %table.user_info
+      %tr
+        %td.data_name Name
+        %td.data= @user.name
+      %tr
+        %td.data_name Email
+        %td.data= @user.email
+      %tr
+        %td.data_name Login
+        %td.data= @user.login
+      %tr
+        %td.data_name Role
+        %td.data= @user.role

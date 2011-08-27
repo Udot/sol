@@ -26,3 +26,16 @@ ul.menu-dropdown.login input.btn {
 	line-height: 18px;
 	padding: 4px 14px;*/
 }
+
+table.user_info {
+	padding: 10px;
+	width: 200px;
+}
+
+td.data_name {
+	background: #8B8F8B;
+	font-weight: bold;
+	color: #FFF;
+}
+td.data {
+}
