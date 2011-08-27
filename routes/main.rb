@@ -57,23 +57,20 @@ class MyApp < Sinatra::Application
 
     get '/protected' do
       env['warden'].authenticate!
-      'this is protected'
+      flash[:notice] = 'this is protected'
     end
 
     post '/login/?' do
       if env['warden'].authenticate
-        flash[:notice] = "Logged in"
-        redirect "/"
+        redirect "/", :notice => "Logged in"
       else
-        flash[:error] = "Login failed"
-        redirect "/login"
+        redirect "/login", :error => "Login failed"
       end
     end
 
     get '/logout/?' do
-      flash[:notice] = "Logged out"
       env['warden'].logout
-      redirect "/"
+      redirect "/", :notice => "Logged out"
     end
 
     get '/error' do
