@@ -1,2 +1,5 @@
 bundler/*
 log/*
+.DS_Store
+*/*/.DS_Store
+sinatra.log
