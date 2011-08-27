@@ -61,4 +61,32 @@
           %div.alert-message.warning
             %a.close{:href => "#"} &times;
             %p= flash[:warning]
+        - if env['warden'].user
+          %div.row
+            %div.span12.columns
+              %ul.tabs
+                - if (@active_tab == "dashboard")
+                  %li.active
+                    %a{:href => "/"} Dashboard
+                - else
+                  %li
+                    %a{:href => "/"} Dashboard
+                - if (@active_tab == "dragons")
+                  %li.active
+                    %a{:href => "/dragons"} Dragons
+                - else
+                  %li
+                    %a{:href => "/dragons"} Dragons
+                - if (@active_tab == "eggs")
+                  %li.active
+                    %a{:href => "/eggs"} Eggs
+                - else
+                  %li
+                    %a{:href => "/eggs"} Eggs
+                - if (@active_tab == "keys")
+                  %li.active
+                    %a{:href => "/keys"} Keys
+                - else
+                  %li
+                    %a{:href => "/keys"} Keys
         = yield

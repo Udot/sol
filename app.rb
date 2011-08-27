@@ -5,6 +5,7 @@ require "bundler/setup"
 # get all the gems in
 Bundler.require(:default)
 
+require 'rack-flash'
 require 'sinatra/redirect_with_flash'
 require_relative 'minify_resources'
 

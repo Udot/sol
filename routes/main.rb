@@ -44,8 +44,12 @@ class MyApp < Sinatra::Application
     end
 
     get "/" do
-      haml "public/index".to_sym
+      root_dir = "public"
+      root_dir = "private" if env['warden'].user
+      @active_tab = "dashboard"
+      haml "#{root_dir}/index".to_sym
     end
+
     post '/unauthenticated/?' do
       status 401
       login

@@ -1,2 +1,5 @@
 require_relative 'main'
 require_relative 'git_api'
+require_relative 'eggs'
+require_relative 'keys'
+require_relative 'dragons'
