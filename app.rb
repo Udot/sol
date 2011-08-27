@@ -5,10 +5,10 @@ require "bundler/setup"
 # get all the gems in
 Bundler.require(:default)
 
-
 require_relative 'minify_resources'
 class MyApp < Sinatra::Application
 	enable :sessions
+  use Rack::Flash, :sweep => true
 	set :haml, :format => :html5
 
 	configure :production do

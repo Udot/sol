@@ -6,7 +6,7 @@ require "bundler/setup"
 Bundler.require(:default)
 DataMapper::Logger.new($stdout, :debug)
 
-DataMapper.setup(:default, :adapter => "mysql", :database => "1111111", :username => "111", :password => "11111111")
+DataMapper.setup(:default, :adapter => "mysql", :database => "jupiter", :username => "jupiter", :password => "jupiter")
 
 require './models/init'
 
@@ -15,7 +15,7 @@ class Setup < Thor
   desc "user_init", "setup the first user"
   def user_init
 		if User.all.count == 0
-      a_user = User.create(:name => "11111", :email => "1111111111@ergerg.com", :password => "111111", :password_confirmation => "111111")
+      a_user = User.create(:name => "Thomas Riboulet", :email => "riboulet@gmail.com", :password => "testtest", :password_confirmation => "testtest", :login => "mcansky")
       a_user.save
     end
   end

@@ -5,6 +5,7 @@ gem "bcrypt-ruby", "~> 2.1.4"
 
 gem 'sinatra', '1.2.6'
 gem "thor"
+gem "rack-flash"
 
 gem 'ruby-mysql', "2.9.3"
 group :production do

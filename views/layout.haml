@@ -30,8 +30,10 @@
                 %a{:href => "#contact"} Contact
             %ul.nav.secondary-nav
               - if env['warden'].user == nil
-                %li
+                %li.menu
                   %a{:href => "/login"} Login
+                %li
+                  %a{:href => "/signup"} Signup
               - else
                 %li.menu
                   %a.menu{:href => "#"}= env['warden'].user.name
@@ -40,8 +42,23 @@
                       %a{:href => "#"} Preferences
                     %li.divider
                     %li
-                      %a{:href => "#"} Signout
+                      %a{:href => "/logout"} Logout
                 
     %div.container-fluid
       %div.sidebar
-      %div.content= yield
+      %div.content
+        - if flash[:error]
+          %div.alert-message.error
+            %a.close{:href => "#"} &times;
+            %p
+              %strong Error
+              = flash[:error]
+        - if flash[:notice]
+          %div.alert-message.success
+            %a.close{:href => "#"} &times;
+            %p= flash[notice]
+        - if flash[:warning]
+          %div.alert-message.warning
+            %a.close{:href => "#"} &times;
+            %p= flash[:warning]
+        = yield
