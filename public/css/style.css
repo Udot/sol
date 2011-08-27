@@ -4,29 +4,6 @@ div.content {
 
 div.clear { clear: both;}
 
-ul.menu-dropdown.login {
-	width: 200px;
-	color: #FFF;
-	padding: 10px;
-}
-
-ul.menu-dropdown.login input.field {
-	float: right;
-	margin-right: 10px;
-	width: 90px;
-	height: 13pt;
-	margin-bottom: 10px;
-}
-
-ul.menu-dropdown.login input.btn {
-	width: 100px;
-	margin-left: 50px;
-	margin-right: 50px;
-/*	height: 20px;
-	line-height: 18px;
-	padding: 4px 14px;*/
-}
-
 table.user_info {
 	padding: 10px;
 	width: 200px;

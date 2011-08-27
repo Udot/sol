@@ -88,7 +88,7 @@ $(document).ready(function(){
   // POSITION TWIPSIES
   // =================
 
-  $('.twipsies.well a').each(function () {
+  $('.twipsies a').each(function () {
     var type = this.title
       , $anchor = $(this)
       , $twipsy = $('.twipsy.' + type)
@@ -114,8 +114,8 @@ $(document).ready(function(){
           , left: anchor.position.left + (anchor.width/2) - (twipsy.width/2)
           }
         , left: {
-            top: anchor.position.top + (anchor.height/2) - (twipsy.height/2)
-          , left: anchor.position.left - twipsy.width - 5
+            top: anchor.position.top - (anchor.height/2) - (twipsy.height/2)
+          , left: anchor.position.left - twipsy.width - 100
           }
         , right: {
             top: anchor.position.top + (anchor.height/2) - (twipsy.height/2)

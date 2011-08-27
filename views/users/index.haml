@@ -1,8 +1,9 @@
 %div.row
   %div.span12.columns
     %h2 Users
+    %legend Manage your user
     - if @users.count > 0
-      %table.zebra-striped
+      %table.zebra-striped{:style => "margin-bottom: 0;"}
         %thead
           %tr
             %th Name

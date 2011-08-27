@@ -1,0 +1,47 @@
+%div.row
+  %div.span12.columns
+    %h2= @user.name
+
+%div.row
+  %div.span6.columns
+    %form{:action => "/users/#{@user.id}/update", :method => "post"}
+      %fieldset
+        %legend Edit the details
+        .clearfix
+          %label{:for => ""} Name
+          .input
+            %input{:name => "name", :type => "text", :value => @user.name}/
+        / /clearfix
+        .clearfix
+          %label{:for => ""} Email
+          .input
+            %input{:name => "email", :type => "text", :value => @user.email}/
+        / /clearfix
+        .clearfix
+          %label{:for => ""} Login
+          .input
+            %input.uneditable-input{:name => "login", :type => "text", :value => @user.login}/
+        / /clearfix
+        .clearfix
+          %label{:for => ""} Role
+          .input
+            - if (@user.admin? && (@user.id != env['warden'].user.id))
+              %input{:name => "role", :type => "text", :value => @user.role}/
+            - elsif
+              %input.uneditable-input{:name => "role", :type => "text", :value => @user.role}/
+        / /clearfix
+        .clearfix
+          %label{:for => ""} Password
+          .input
+            %input#password1{:name => "password", :type => "password"}/
+        / /clearfix
+        .clearfix
+          %label{:for => ""} Password confirmation
+          .input
+            %input#password2{:name => "password_confirmation", :type => "password"}/
+        / /clearfix
+        
+        .actions
+          %button#submit_user.btn.primary{:type => "submit"}> Save Changes
+          \ 
+          %button.btn{:type => "reset"} Cancel
