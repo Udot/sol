@@ -61,6 +61,7 @@ class SshKey
 
   # send keys to git gate using the MercureApi
   def self.deploy
+    logger.info("[SshKey deploy] calling mercure api")
     return MercureApi.deploy_keys(SshKey.export)
   end
   
