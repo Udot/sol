@@ -6,8 +6,8 @@ worker_processes 2
 
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
-working_directory "/var/www/backoffice/jupiter_production/current" # available in 0.94.0+
-
+working_directory "/var/www/backoffice/jupiter_production/current"
+shared_dir = "/var/www/backoffice/jupiter_production/shared"
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
 listen 8081, :tcp_nopush => true
@@ -16,13 +16,13 @@ listen 8081, :tcp_nopush => true
 timeout 30
 
 # feel free to point this anywhere accessible on the filesystem
-pid "/var/backoffice/pids/unicorn-jupiter.pid"
+pid "#{shared_dir}/pids/unicorn-jupiter.pid"
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,
 # so prevent them from going to /dev/null when daemonized here:
-stderr_path "/var/backoffice/log/unicorn-jupiter.stderr.log"
-stdout_path "/var/backoffice/log/unicorn-jupiter.stdout.log"
+stderr_path "#{shared_dir}/log/unicorn-jupiter.stderr.log"
+stdout_path "#{shared_dir}/log/unicorn-jupiter.stdout.log"
 
 # combine REE with "preload_app true" for memory savings
 # http://rubyenterpriseedition.com/faq.html#adapt_apps_for_cow

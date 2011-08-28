@@ -32,7 +32,7 @@ namespace :deploy do
   end
 
   task :stop, :roles => [:web, :app] do
-    pid = IO.read("/var/backoffice/pids/unicorn-jupiter.pid")
+    pid = IO.read("#{shared_path}/pids/unicorn-jupiter.pid")
     run "cd #{deploy_to}/current && kill -QUIT #{pid}"
   end
 
@@ -41,9 +41,10 @@ namespace :deploy do
     deploy.start
   end
   
-  # This will make sure that Capistrano doesn't try to run rake:migrate (this is not a Rails project!)
+  # This will make sure that Capistrano doesn't try to run rake:migrate
   task :cold do
     deploy.update
+    deploy.stop
     deploy.start
   end
   namespace :db do
