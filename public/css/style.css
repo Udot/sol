@@ -16,3 +16,8 @@ td.data_name {
 }
 td.data {
 }
+
+td.error {
+	font-weight: bold;
+	color: #B63535;
+}
