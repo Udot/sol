@@ -28,7 +28,7 @@ after "deploy:symlink", "deploy:db:symlink"
 
 namespace :deploy do
   task :start, :roles => [:web, :app] do
-    run "cd #{deploy_to}/current && bundle exec unicorn -C config/unicorn.rb -R config.ru -D -E production"
+    run "cd #{deploy_to}/current && bundle exec unicorn -c #{deploy_to}/current/config/unicorn.rb -D -E production #{deploy_to}/current/config.ru"
   end
 
   task :stop, :roles => [:web, :app] do
@@ -49,8 +49,8 @@ namespace :deploy do
   namespace :db do
     desc "Create symlink to database.yml in shared folder"
     task :symlink do
-      run "cd #{current_path}/config; rm -f database.yml; ln -nfs #{shared_path}/database.yml"
-      run "cd #{current_path}/public; rm -rf attachments; ln -nfs #{shared_path}/attachments"
+      #run "cd #{current_path}/config; rm -f database.yml; ln -nfs #{shared_path}/database.yml"
+      #run "cd #{current_path}/public; rm -rf attachments; ln -nfs #{shared_path}/attachments"
     end
   end
 end
