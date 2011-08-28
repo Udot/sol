@@ -1,9 +1,6 @@
 # encoding: utf-8
 
 class GitRepository
-  configure do
-    LOGGER = Logger.new("sinatra.log")
-  end
   include DataMapper::Resource
 
   property :id, Serial

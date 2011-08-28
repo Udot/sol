@@ -1,13 +1,4 @@
 class MyApp < Sinatra::Application
-    configure do
-      LOGGER = Logger.new("sinatra.log")
-    end
-
-    helpers do
-      def logger
-        LOGGER
-      end
-    end
 
     Warden::Manager.serialize_into_session{|user| user.id }
     Warden::Manager.serialize_from_session{|id| User.get(id) }

@@ -14,8 +14,17 @@ require_relative 'minify_resources'
 class MyApp < Sinatra::Application
   use Rack::Flash
 	enable :sessions
+	enable :logging
 	set :haml, :format => :html5
-
+	
+  configure do
+    LOGGER = Logger.new("log/#{settings.environment.to_s}.log")
+  end
+  helpers do
+    def logger
+      LOGGER
+    end
+  end
 	RailsConfig.load_and_set_settings("./config/settings.yml", "./config/settings/#{settings.environment.to_s}.yml")
 
 	configure :production do

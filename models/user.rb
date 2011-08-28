@@ -4,9 +4,6 @@ require 'securerandom'
 require 'digest/sha1'
 
 class User
-  configure do
-    LOGGER = Logger.new("sinatra.log")
-  end
   include DataMapper::Resource
 
   property :id, Serial
