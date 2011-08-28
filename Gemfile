@@ -36,3 +36,6 @@ gem "shotgun", :group => :development
 gem 'ruby-debug19', :require => 'ruby-debug'
 
 gem 'nokogiri'
+
+# deploy
+gem "capistrano"
