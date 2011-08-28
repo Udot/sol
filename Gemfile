@@ -14,6 +14,8 @@ gem "data_mapper"
 group :production do
   gem "pg"
   gem "dm-postgres-adapter"
+  gem "jsmin"
+  gem "cssmin"
 end
 #gem "resque"
 
