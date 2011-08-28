@@ -6,8 +6,6 @@ require "bundler/setup"
 Bundler.require(:default)
 DataMapper::Logger.new($stdout, :debug)
 
-DataMapper.setup(:default, :adapter => "mysql", :database => "jupiter", :username => "jupiter", :password => "jupiter")
-
 require './models/init'
 
 RailsConfig.load_and_set_settings("./config/settings.yml")
