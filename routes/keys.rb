@@ -24,11 +24,13 @@ class MyApp < Sinatra::Application
 
   get "/keys/export" do
     env['warden'].authenticate!
-    logger.info("loading data")
+    logger.info("[Keys Export] ready to export")
     redirect "/keys", :notice => "You don't have enough rights" unless env['warden'].user.admin?
     if SshKey.deploy
+      logger.info("[Keys Export] exported")
       redirect "/keys", :notice => "Keys have been exported."
     else
+      logger.error("[Keys Export] failed to export")
       redirect "/keys", :error => "A problem occured while exporting keys."
     end
   end
