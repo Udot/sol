@@ -11,7 +11,8 @@
           %th Kind
           %th
             %a.btn.success{:href => "/keys/new"} Add
-            %a.btn.info{:href => "/keys/export"} Sync
+            - if env['warden'].user.admin?
+              %a.btn.info{:href => "/keys/export"} Sync
       - if @ssh_keys.count > 0
         - @ssh_keys.each do |key|
           %tbody
