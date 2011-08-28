@@ -13,7 +13,7 @@ class Setup < Thor
   desc "user_init", "setup the first user"
   def user_init
 		if User.all.count == 0
-      a_user = User.create(:name => "Thomas Riboulet", :email => "riboulet@gmail.com", :password => "testtest", :password_confirmation => "testtest", :login => "mcansky")
+      a_user = User.create(:name => "Thomas Riboulet", :email => "riboulet@gmail.com", :password => "testtest", :password_confirmation => "testtest", :login => "mcansky", :role => "admin")
       a_user.save
     end
     if ApiUser.count == 0
