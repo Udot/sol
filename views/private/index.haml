@@ -18,3 +18,28 @@
               %td= service["status"]
               %td
                 %a{:href => service["url"]} Show
+%div.row
+  %div.span12.columns
+    %h3 Sub modules
+    %legend modules api keys (keep them secret)
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th Service
+          %th Login
+          %th Token
+        %tbody
+          %tr
+            %td Git gate
+            %td= Settings.mercure_api.username
+            %td= Settings.mercure_api.token
+          - if ApiUser.count > 0
+            %tr
+              %td Git shell
+              %td= ApiUser.first.login
+              %td= ApiUser.first.token
+          - else
+            %tr
+              %td Git shell
+              %td You must run
+              %td bundle exec thor setup:user_init

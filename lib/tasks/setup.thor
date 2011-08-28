@@ -16,5 +16,8 @@ class Setup < Thor
       a_user = User.create(:name => "Thomas Riboulet", :email => "riboulet@gmail.com", :password => "testtest", :password_confirmation => "testtest", :login => "mcansky")
       a_user.save
     end
+    if ApiUser.count == 0
+      an_auser = ApiUser.create(:login => "shell_user")
+    end
   end
 end
