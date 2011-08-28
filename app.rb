@@ -1,4 +1,6 @@
 # encoding: utf-8
+ENV['RACK_ENV'] = "development" unless ENV['RACK_ENV'] != nil
+
 require "rubygems"
 require "bundler/setup"
 
@@ -13,7 +15,7 @@ class MyApp < Sinatra::Application
   use Rack::Flash
 	enable :sessions
 	set :haml, :format => :html5
-	
+
 	RailsConfig.load_and_set_settings("./config/settings.yml")
 
 	configure :production do
