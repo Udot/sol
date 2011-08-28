@@ -8,14 +8,16 @@ gem "thor"
 gem "rack-flash"
 gem "sinatra-redirect-with-flash"
 
-gem 'ruby-mysql', "2.9.3"
-group :production do
-  gem "pg"
-end
-#gem "resque"
+gem 'ruby-mysql', "2.9.3", :group => [:development, :test]
 gem "redis"
 gem "data_mapper"
-gem "dm-mysql-adapter"
+group :production do
+  gem "pg"
+  gem "dm-postgres-adapter"
+end
+#gem "resque"
+
+gem "dm-mysql-adapter", :group => [:development, :test]
 
 gem "rails_config"
 
