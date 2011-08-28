@@ -32,6 +32,27 @@ class MyApp < Sinatra::Application
     end
   end
 
+  post '/api/git/push' do
+    if not api_auth(env)
+      # the git lib gateway doesn't have a proper api username and/or token
+      status 401
+      body "Unauthorized / Authentication failed"
+      return
+    end
+    if params[:rev] && params[:repository]
+      rep = GitRepository.first(:path => params[:repository])
+      rep.last_rev = params[:rev]
+      rep.last_update = Time.now
+      rep.save
+      status 200
+      body "ok"
+    else
+      status 400
+      body "some params missing"
+      return
+    end
+  end
+
   private
   def api_auth(the_env)
     token = the_env['HTTP_TOKEN'] || the_env['TOKEN']

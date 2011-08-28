@@ -11,6 +11,8 @@ class GitRepository
   property :user_id, Integer
   property :egg_id, Integer
   property :last_check_at, DateTime
+  property :last_rev, String
+  property :last_update, DateTime
 
   belongs_to :user
   belongs_to :egg
