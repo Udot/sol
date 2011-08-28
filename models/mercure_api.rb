@@ -27,7 +27,6 @@ module MercureApi
   end
 
   def deploy_keys(authfile)
-    repository_path = "#{Settings.repos.root_dir}/#{username}/#{repository}.git"
     payload = {:data => {"authfile" => authfile}.to_json}
     code, response = self.post("/keys", payload)
     if (code == "200") || (code == 200)

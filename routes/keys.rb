@@ -22,6 +22,16 @@ class MyApp < Sinatra::Application
     redirect "/keys", :notice => "ssh key added."
   end
 
+  get "/keys/export" do
+    env['warden'].authenticate!
+    redirect "/keys", :notice => "You don't have enough rights" unless env['warden'].user.admin?
+    if SshKey.deploy
+      redirect "/keys", :notice => "Keys have been exported."
+    else
+      redirect "/keys", :error => "A problem occured while exporting keys."
+    end
+  end
+
   get "/keys/:id" do
     env['warden'].authenticate!
     @ssh_key = SshKey.get(params[:id])
@@ -42,20 +52,11 @@ class MyApp < Sinatra::Application
     env['warden'].authenticate!
     redirect "/keys/#{params[:id]}/edit", :error => "invalid key" unless SshKey.valid?(params[:ssh_key])
     ssh_key = SshKey.get(params[:id])
-    redirect "/keys", :error => "This key doesn't belong to you." unless @ssh_key.user.id == env['warden'].user.id
+    redirect "/keys", :error => "This key doesn't belong to you." unless ssh_key.user.id == env['warden'].user.id
     ssh_key.name = params[:name]
     ssh_key.ssh_key = params[:ssh_key]
     ssh_key.save
     redirect "/keys", :notice => "key updated."
   end
 
-  get "/keys/export" do
-    env['warden'].authenticate!
-    redirect "/keys", :notice => "You don't have enough rights" unless env['warden'].user.admin?
-    if SshKey.deploy
-      redirect "/keys", :notice => "Keys have been exported."
-    else
-      redirect "/keys", :error => "A problem occured while exporting keys."
-    end
-  end
 end
