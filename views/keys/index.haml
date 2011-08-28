@@ -2,7 +2,6 @@
   %div.span12.columns
     %h2
       Ssh Keys
-      %a.btn{:href => "/keys/export"} Sync
     %legend Manage your ssh keys
     %table.zebra-striped{:style => "margin-bottom: 0;"}
       %thead
@@ -11,8 +10,8 @@
           %th Login
           %th Kind
           %th
-            %a{:href => "/keys/new"}
-              %img{:src => "/img/plus.png", :height => "20px"}
+            %a.btn.success{:href => "/keys/new"} Add
+            %a.btn.info{:href => "/keys/export"} Sync
       - if @ssh_keys.count > 0
         - @ssh_keys.each do |key|
           %tbody
