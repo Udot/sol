@@ -48,4 +48,14 @@ class MyApp < Sinatra::Application
     ssh_key.save
     redirect "/keys", :notice => "key updated."
   end
+
+  get "/keys/export" do
+    env['warden'].authenticate!
+    redirect "/keys", :notice => "You don't have enough rights" unless env['warden'].user.admin?
+    if SshKey.deploy
+      redirect "/keys", :notice => "Keys have been exported."
+    else
+      redirect "/keys", :error => "A problem occured while exporting keys."
+    end
+  end
 end

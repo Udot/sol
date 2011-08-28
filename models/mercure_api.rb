@@ -25,6 +25,16 @@ module MercureApi
       return "dead"
     end
   end
+
+  def deploy_keys(authfile)
+    repository_path = "#{Settings.repos.root_dir}/#{username}/#{repository}.git"
+    payload = {:data => {"authfile" => authfile}.to_json}
+    code, response = self.post("/keys", payload)
+    if (code == "200") || (code == 200)
+      return true
+    end
+    return false
+  end
   
   def get(request)
     http_r = Net::HTTP.new(Settings.mercure_api.host, Settings.mercure_api.port)

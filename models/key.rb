@@ -58,6 +58,11 @@ class SshKey
     end
     return auth_file
   end
+
+  # send keys to git gate using the MercureApi
+  def self.deploy
+    return MercureApi.deploy_keys(SshKey.export)
+  end
   
   # validity check
   def self.valid?(a_key)
