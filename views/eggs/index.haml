@@ -9,6 +9,7 @@
           %th Status
           %th Repository
           %th Repository Status
+          %th Repository at
           %th
             %a{:href => "/eggs/new"}
               %img{:src => "/img/plus.png", :height => "20px"}
@@ -20,6 +21,7 @@
               %td NC
               %td= egg.git_repository.remote_url if egg.git_repository
               %td= egg.git_repository.updated_status
+              %td= egg.git_repository.last_rev.slice(0..8) + '..' if egg.git_repository.last_rev
               %td
                 %a{:href => "/eggs/#{egg.id}"} Show
                 %a{:href => "/eggs/#{egg.id}/edit"} Edit
