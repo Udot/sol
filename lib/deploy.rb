@@ -2,8 +2,7 @@ require 'bundler/capistrano'
 $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory to the load path.
 require "rvm/capistrano"
 
-set :rvm_ruby_string, '1.9.2-p290@hosting'
-set :rvm_type, :user
+set :rvm_ruby_string, '1.9.2-p290@backoffice'
 
 default_run_options[:pty] = true
 
@@ -16,8 +15,8 @@ set :deploy_to, "/var/www/backoffice/#{application}_production"
 set :shared_path, "#{deploy_to}/shared"
 set :repository, "git@codeplane.com:mcansky/Jupiter.git"
 set :scm, "git"
-#ssh_options[:forward_agent] = true
-ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa_BO_pull1")]
+ssh_options[:forward_agent] = true
+ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa_BO_deploy")]
 
 role :web, "backup.arbousier.info"
 role :app, "backup.arbousier.info"
