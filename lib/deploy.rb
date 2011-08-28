@@ -32,7 +32,15 @@ namespace :deploy do
   end
 
   task :stop, :roles => [:web, :app] do
-    run "cd #{deploy_to}/current && kill -QUIT `cat #{shared_path}/pids/unicorn-jupiter.pid`"
+    run "cd #{deploy_to}/current && kill -QUIT `cat #{shared_path}/pids/unicorn-#{application}.pid`"
+  end
+
+  task :subdir_setup, :roles => [:web, :app] do
+    run "chmod -R 770 #{deploy_to}/shared #{deploy_to}/releases"
+    ["pids", "log", "system"].each do |dir|
+      run "if [ ! -d #{deploy_to}/shared/#{dir} ]; then mkdir #{deploy_to}/shared/#{dir}; fi"
+    end
+    run "chmod -R 770 #{deploy_to}/shared #{deploy_to}/releases"
   end
 
   task :restart, :roles => [:web, :app] do
@@ -42,12 +50,14 @@ namespace :deploy do
   
   # This will make sure that Capistrano doesn't try to run rake:migrate
   task :clean_cold do
-    deploy.update
     deploy.stop
+    deploy.update
+    deploy.subdir_setup
     deploy.start
   end
   task :cold do
     deploy.update
+    deploy.subdir_setup
     deploy.start
   end
   namespace :db do
