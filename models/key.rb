@@ -10,6 +10,7 @@ class SshKey
   property :user_id, Integer
   property :created_at, DateTime
   property :updated_at, DateTime
+  property :deploy, Boolean, :default => false
 
   # extract the login from the pasted key and insert it in the db
   def extract_login
@@ -22,6 +23,11 @@ class SshKey
   def short
     key_pieces = self.ssh_key.split(" ")
     return key_pieces[0] + " " + key_pieces[1]
+  end
+
+  def kind
+    return "push (read-write, your side)" unless deploy
+    return "pull (read-only, app server side)"
   end
 
   # split up the key in several 20 chars lines

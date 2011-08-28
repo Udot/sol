@@ -19,6 +19,15 @@
               Was :
               = @ssh_key.ssh_key_nice
         / /clearfix
+        .clearfix
+          %label{:for => ""} Kind
+          .input
+            - checked_value = 0
+            - checked_value = 1 if @ssh_key.deploy
+            %input{:type => "checkbox", :name => "deploy", :checked => checked_value}
+            %span.help-block
+              A deploy key is a read only key, it's the one that belongs on your app server.
+        / /clearfix
         
         .actions
           %button#submit_user.btn.primary{:type => "submit"}> Create

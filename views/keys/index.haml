@@ -7,6 +7,7 @@
         %tr
           %th Name
           %th Login
+          %th Kind
           %th
             %a{:href => "/keys/new"}
               %img{:src => "/img/plus.png", :height => "20px"}
@@ -16,6 +17,7 @@
             %tr
               %td= key.name
               %td= key.login
+              %td= key.kind
               %td
                 %a{:href => "/keys/#{key.id}"} Show
                 %a{:href => "/keys/#{key.id}/edit"} Edit

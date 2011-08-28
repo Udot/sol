@@ -19,6 +19,14 @@
             %span.help-block
               Enter your ssh key.
         / /clearfix
+        .clearfix
+          %label{:for => ""} Kind
+          .input
+            %input{:type => "checkbox", :name => "deploy"}
+              %span Deploy key
+              %span.help-block
+                A deploy key is a read only key, it's the one that belongs on your app server.
+        / /clearfix
         
         .actions
           %button#submit_user.btn.primary{:type => "submit"}> Create
