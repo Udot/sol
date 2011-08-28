@@ -3,6 +3,7 @@ $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory
 require "rvm/capistrano"
 
 set :rvm_ruby_string, '1.9.2-p290@backoffice'
+set :rvm_type, :user
 
 default_run_options[:pty] = true
 
