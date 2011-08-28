@@ -42,9 +42,13 @@ namespace :deploy do
   end
   
   # This will make sure that Capistrano doesn't try to run rake:migrate
-  task :cold do
+  task :clean_cold do
     deploy.update
     deploy.stop
+    deploy.start
+  end
+  task :cold do
+    deploy.update
     deploy.start
   end
   namespace :db do
