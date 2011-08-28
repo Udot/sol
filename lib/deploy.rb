@@ -32,8 +32,7 @@ namespace :deploy do
   end
 
   task :stop, :roles => [:web, :app] do
-    pid = IO.read("#{shared_path}/pids/unicorn-jupiter.pid")
-    run "cd #{deploy_to}/current && kill -QUIT #{pid}"
+    run "cd #{deploy_to}/current && kill -QUIT `cat #{shared_path}/pids/unicorn-jupiter.pid`"
   end
 
   task :restart, :roles => [:web, :app] do
