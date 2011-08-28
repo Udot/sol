@@ -2,7 +2,7 @@
 worker_processes 2
 
 # user / group
-user "www-data","www-data"
+#user "www-data","www-data"
 
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
