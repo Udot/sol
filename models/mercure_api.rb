@@ -16,16 +16,29 @@ module MercureApi
     payload = {"path" => repository_path}
     return self.post("/repositories/status", payload)
   end
+
+  def gate_status
+    code, body = self.get("/alive")
+    if (code == "200") || (code == 200)
+      return "alive"
+    else
+      return "dead"
+    end
+  end
   
   def get(request)
     http_r = Net::HTTP.new(Settings.mercure_api.host, Settings.mercure_api.port)
     http_r.use_ssl = Settings.mercure_api.ssl
     response = nil
-    http_r.start() do |http|
-      req = Net::HTTP::Get.new(request)
-      req.add_field("USERNAME", Settings.mercure_api.username)
-      req.add_field("TOKEN", Settings.mercure_api.token)
-      response = http.request(req)
+    begin
+      http_r.start() do |http|
+        req = Net::HTTP::Get.new(request)
+        req.add_field("USERNAME", Settings.mercure_api.username)
+        req.add_field("TOKEN", Settings.mercure_api.token)
+        response = http.request(req)
+      end
+    rescue Errno::ECONNREFUSED
+      return false
     end
     return [response.code, response.body]
   end

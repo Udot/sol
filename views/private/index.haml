@@ -1,0 +1,20 @@
+%div.row
+  %div.span12.columns
+    %h2 Dashboard
+    %legend Status of the moutain
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th Status
+          %th
+      - if @services.count > 0
+        - @services.each do |service|
+          %tbody
+            %tr
+              %td= service["name"]
+              %td= service["description"]
+              %td= service["status"]
+              %td
+                %a{:href => service["url"]} Show

@@ -45,9 +45,10 @@ class MyApp < Sinatra::Application
 
     get "/" do
       root_dir = "public"
-      root_dir = "private" if env['warden'].user
-      @active_tab = "dashboard"
-      haml "#{root_dir}/index".to_sym
+      if env['warden'].user
+        redirect "/dashboard"
+      end
+      haml "public/index".to_sym
     end
 
     post '/unauthenticated/?' do
