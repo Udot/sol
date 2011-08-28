@@ -20,6 +20,23 @@
                 %a{:href => service["url"]} Show
 %div.row
   %div.span12.columns
+    %h3 Eggs
+    %legend Is the coop ok ?
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th Name
+          %th Status
+          %th Rev
+      - if @eggs.count > 0
+        - @eggs.each do |egg|
+          %tbody
+            %tr
+              %td= egg.name
+              %td= egg.git_repository.updated_status
+              %td= egg.git_repository.last_rev.slice(0..8) + '..' if egg.git_repository.last_rev
+%div.row
+  %div.span12.columns
     %h3 Sub modules
     %legend modules api keys (keep them secret)
     %table.zebra-striped{:style => "margin-bottom: 0;"}
