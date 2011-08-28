@@ -16,7 +16,7 @@ class MyApp < Sinatra::Application
 	enable :sessions
 	set :haml, :format => :html5
 
-	RailsConfig.load_and_set_settings("./config/settings.yml")
+	RailsConfig.load_and_set_settings("./config/settings.yml", "./config/settings/#{settings.environment.to_s}.yml")
 
 	configure :production do
 		set :haml, { :ugly=>true }

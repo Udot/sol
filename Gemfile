@@ -42,4 +42,4 @@ gem 'ruby-debug19', :require => 'ruby-debug'
 gem 'nokogiri'
 
 # deploy
-gem "capistrano"
+gem "capistrano", :group => [:development, :test]
