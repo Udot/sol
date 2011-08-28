@@ -29,6 +29,7 @@ module MercureApi
   def deploy_keys(authfile)
     payload = {:data => {"authfile" => authfile}.to_json}
     code, response = self.post("/keys", payload)
+    #return [code, response]
     if (code == "200") || (code == 200)
       return true
     end
