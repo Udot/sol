@@ -28,6 +28,7 @@ module MercureApi
 
   def deploy_keys(authfile)
     payload = {:data => {"authfile" => authfile}.to_json}
+    logger.info("[MercureAPI] posting export")
     code, response = self.post("/keys", payload)
     if (code == "200") || (code == 200)
       return true
@@ -53,6 +54,7 @@ module MercureApi
   end
 
   def post(request,payload)
+    logger.info("[MercureAPI] post request")
     http_r = Net::HTTP.new(Settings.mercure_api.host, Settings.mercure_api.port)
     http_r.use_ssl = Settings.mercure_api.ssl
     response = nil
@@ -64,6 +66,7 @@ module MercureApi
       req.set_form_data(payload)
       response = http.request(req)
     end
+    logger.info("[MercureAPI] post request answered #{response.code}")
     return [response.code, response.body]
   end
 
