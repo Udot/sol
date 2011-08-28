@@ -43,6 +43,8 @@ class MyApp < Sinatra::Application
     egg = Egg.create(:name => params[:name], :user_id => env['warden'].user.id)
     egg.git_repository = GitRepository.create(:name => params[:name], :user_id => env['warden'].user.id, :egg_id => egg.id)
     egg.git_repository.generate_path
+    egg.git_repository.remote_setup
+    egg.git_repository.remote_status
     egg.save
     redirect "/eggs", :notice => "Egg updated."
   end

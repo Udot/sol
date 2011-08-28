@@ -15,10 +15,4 @@ logs:
   email: email.log
   scm: scm.log
   jup_sh: jup_sh.log
-mercure_api:
-  token: a1c116090cae590788ae2b9421ef7dd7263a5ac8
-  username: jupiter_sands
-  ssl: false
-  host: localhost
-  port: 8082
   

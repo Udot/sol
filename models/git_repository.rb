@@ -40,6 +40,7 @@ class GitRepository
   def updated_status
     return status if ((last_check_at != nil) && (last_check_at > Time.now - 720))
     self.status = remote_status
+    last_check_at = Time.now
     return status
   end
 
