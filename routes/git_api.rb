@@ -39,14 +39,12 @@ class MyApp < Sinatra::Application
       body "Unauthorized / Authentication failed"
       return
     end
-    logger.info(params.to_s)
     if params[:rev] && params[:repository]
       rep = GitRepository.first(:path => params[:repository])
       rep.last_rev = params[:rev]
       rep.last_update = Time.now
       rep.save
       status 200
-      body "ok"
     else
       status 400
       body "some params missing"
