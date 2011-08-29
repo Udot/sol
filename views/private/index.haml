@@ -49,12 +49,16 @@
           %tr
             %td Git gate
             %td= Settings.mercure_api.username
-            %td= Settings.mercure_api.token
+            %td
+              %span.secret#token1= Settings.mercure_api.token
+              %a.btn.info.secretB{:rel => "token1"} Show
           - if ApiUser.count > 0
             %tr
               %td Git shell
               %td= ApiUser.first.login
-              %td= ApiUser.first.token
+              %td
+                %span.secret#token2= ApiUser.first.token
+                %a.btn.info.secretB{:rel => "token2"} Show
           - else
             %tr
               %td Git shell

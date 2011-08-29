@@ -55,7 +55,7 @@ $(document).ready(function(){
   // table sort example
   // ==================
 
-  $("#sortTableExample").tablesorter( {sortList: [[1,0]]} );
+  //$("#sortTableExample").tablesorter( {sortList: [[1,0]]} );
 
 
   // add on logic

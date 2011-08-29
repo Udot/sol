@@ -20,4 +20,15 @@ $(document).ready(function(){
 			$("#password2").removeClass("error");
 		}
 	});
+	$(".secretB").click(function () {
+		token_span = $(this).attr('rel');
+		$("#"+token_span).toggle();
+		if ($(this).hasClass("info")) {
+			$(this).html("Hide");
+			$(this).removeClass('info');
+		} else {
+			$(this).html("Show");
+			$(this).addClass('info');
+		}
+	});
 });
