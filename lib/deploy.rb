@@ -19,10 +19,15 @@ set :scm, "git"
 ssh_options[:forward_agent] = true
 ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa_BO_deploy")]
 
-role :web, "backup.arbousier.info"
-role :app, "backup.arbousier.info"
-role :db,  "backup.arbousier.info", :primary => true
-role :db,  "backup.arbousier.info"
+#role :web, "backup.arbousier.info"
+#role :app, "backup.arbousier.info"
+#role :db,  "backup.arbousier.info", :primary => true
+#role :db,  "backup.arbousier.info"
+
+role :web, "31.222.160.97"
+role :app, "31.222.160.97"
+role :db, "31.222.160.97", :primary => true
+role :db, "31.222.160.97"
 
 after "deploy:symlink", "deploy:db:symlink"
 

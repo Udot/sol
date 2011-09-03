@@ -16,6 +16,7 @@ group :production do
   gem "dm-postgres-adapter"
   gem "jsmin"
   gem "cssmin"
+  gem "remote_syslog_logger"
 end
 #gem "resque"
 

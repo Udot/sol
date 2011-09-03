@@ -17,14 +17,6 @@ class MyApp < Sinatra::Application
 	enable :logging
 	set :haml, :format => :html5
 	
-  configure do
-    LOGGER = Logger.new("log/#{settings.environment.to_s}.log")
-  end
-  helpers do
-    def logger
-      LOGGER
-    end
-  end
 	RailsConfig.load_and_set_settings("./config/settings.yml", "./config/settings/#{settings.environment.to_s}.yml")
 
 	configure :production do
@@ -33,6 +25,12 @@ class MyApp < Sinatra::Application
 		set :css_files, :blob
 		set :js_files,  :blob
 		MinifyResources.minify_all
+		if ENV['REMOTE_SYSLOG_URI']
+      require 'lib/remote_syslog'
+
+      logger = RemoteSyslog.new(Settings.remote_log_url)
+      use Rack::CommonLogger, logger
+    end
 	end
 
 	configure :development do
@@ -40,6 +38,8 @@ class MyApp < Sinatra::Application
     set :show_exceptions, true
 		set :css_files, MinifyResources::CSS_FILES
 		set :js_files,  MinifyResources::JS_FILES
+		logger = Logger.new("log/#{settings.environment.to_s}.log")
+		use Rack::CommonLogger, logger
 	end
 
 	helpers do
