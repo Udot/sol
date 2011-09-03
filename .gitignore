@@ -1,4 +1,5 @@
 bundler/*
+bundled/*
 log/*
 .DS_Store
 */*/.DS_Store
