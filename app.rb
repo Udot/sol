@@ -25,12 +25,10 @@ class MyApp < Sinatra::Application
 		set :css_files, :blob
 		set :js_files,  :blob
 		MinifyResources.minify_all
-		if ENV['REMOTE_SYSLOG_URI']
-      require 'lib/remote_syslog'
+    require 'lib/remote_syslog'
 
-      logger = RemoteSyslog.new(Settings.remote_log_url)
-      use Rack::CommonLogger, logger
-    end
+    logger = RemoteSyslog.new(Settings.remote_log_url)
+    use Rack::CommonLogger, logger
 	end
 
 	configure :development do
