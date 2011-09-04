@@ -20,11 +20,14 @@ class MyApp < Sinatra::Application
 	RailsConfig.load_and_set_settings("./config/settings.yml", "./config/settings/#{settings.environment.to_s}.yml")
 
 	configure :production do
+	  require_relative 'lib/remote_syslog'
 		set :haml, { :ugly=>true }
 		set :clean_trace, true
 		set :css_files, :blob
 		set :js_files,  :blob
 		MinifyResources.minify_all
+		logger = RemoteSyslog.new(Settings.remote_log_host,Settings.remote_log_port)
+		use Rack::CommonLogger, logger
 	end
 
 	configure :development do
