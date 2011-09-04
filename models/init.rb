@@ -4,8 +4,8 @@ DataMapper::Logger.new(logger, :info) unless settings.environment.to_s == "devel
 
 # load db config
 db_config = YAML.load_file("./config/database.yml")[settings.environment.to_s]
-DataMapper.setup(:default, :ssl => db_config['ssl'] || false, :hostname => db_config['hostname'] || "localhost", :adapter => db_config["adapter"], :database => db_config["database"], :username => db_config["username"], :password => db_config["password"]) unless settings.environment.to_s == "development"
-DataMapper.setup(:default, :hostname => db_config['hostname'] || "localhost", :adapter => db_config["adapter"], :database => db_config["database"], :username => db_config["username"], :password => db_config["password"]) unless settings.environment.to_s == "production"
+DataMapper.setup(:default, :ssl => true, :host => db_config['host'] || "localhost", :adapter => db_config["adapter"], :database => db_config["database"], :username => db_config["username"], :password => db_config["password"]) unless settings.environment.to_s == "development"
+DataMapper.setup(:default, :adapter => db_config["adapter"], :database => db_config["database"], :username => db_config["username"], :password => db_config["password"]) unless settings.environment.to_s == "production"
 
 require_relative 'user'
 require_relative 'git_repository'
