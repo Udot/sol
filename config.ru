@@ -4,7 +4,7 @@ if ENV['RACK_ENV'] == "production"
   @current_path = File.expand_path(File.dirname(__FILE__))
   require "#{@current_path}/lib/remote_syslog"
 
-  use Rack::CommonLogger, RemoteSyslogLogger.new(Settings.remote_log_host,Settings.remote_log_port)
+  use Rack::CommonLogger, RemoteSyslog.new(Settings.remote_log_host,Settings.remote_log_port)
 else
   logger = Logger.new("log/#{ENV['RACK_ENV']}.log")
 	use Rack::CommonLogger, logger
