@@ -1,5 +1,6 @@
 # encoding: utf-8
-DataMapper::Logger.new($stdout, :debug) unless settings.environment.to_s == "development"
+DataMapper::Logger.new($stdout, :debug) if settings.environment.to_s == "development"
+DataMapper::Logger.new(logger, :info) unless settings.environment.to_s == "development"
 
 # load db config
 db_config = YAML.load_file("./config/database.yml")[settings.environment.to_s]
