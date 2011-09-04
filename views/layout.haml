@@ -12,38 +12,40 @@
     %title= @title
     %link(type="text/css" rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.1.1.min.css")
     %link(type="text/css" rel="stylesheet" href="/css/style.css")
+    %link(type="text/css" rel="stylesheet" href="/css/landing.css")
     %script(type="text/javascript" src="/js/jquery.js")
     %script(type="text/javascript" src="/js/bootstrap.js")
     %script(type="text/javascript" src="/js/application.js")
   %body{id:@action}
-    %div.topbar-wrapper{:style => "z-index: 5;"}
-      %div.topbar
-        %div.fill
-          %div.container
-            %h3
-              %a{:href => "#"} Git front
-            %ul
-              %li.active
-                %a{:href => "#"} Home
-              %li
-                %a{:href => "#about"} About
-              %li
-                %a{:href => "#contact"} Contact
-            %ul.nav.secondary-nav
-              - if env['warden'].user == nil
-                %li.menu
-                  %a{:href => "/login"} Login
+    - if env['warden'].user != nil
+      %div.topbar-wrapper{:style => "z-index: 5;"}
+        %div.topbar
+          %div.fill
+            %div.container
+              %h3
+                %a{:href => "#"} Git front
+              %ul
+                %li.active
+                  %a{:href => "#"} Home
                 %li
-                  %a{:href => "/signup"} Signup
-              - else
-                %li.menu
-                  %a.menu{:href => "#"}= env['warden'].user.name
-                  %ul.menu-dropdown
-                    %li
-                      %a{:href => "#"} Preferences
-                    %li.divider
-                    %li
-                      %a{:href => "/logout"} Logout
+                  %a{:href => "#about"} About
+                %li
+                  %a{:href => "#contact"} Contact
+              %ul.nav.secondary-nav
+                - if env['warden'].user == nil
+                  %li.menu
+                    %a{:href => "/login"} Login
+                  %li
+                    %a{:href => "/signup"} Signup
+                - else
+                  %li.menu
+                    %a.menu{:href => "#"}= env['warden'].user.name
+                    %ul.menu-dropdown
+                      %li
+                        %a{:href => "#"} Preferences
+                      %li.divider
+                      %li
+                        %a{:href => "/logout"} Logout
                 
     %div.container-fluid
       %div.sidebar
