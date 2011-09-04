@@ -1,0 +1,44 @@
+/* font-family: 'Goudy Bookletter 1911', serif;
+font-family: 'Montez', cursive;
+font-family: 'Josefin Sans', sans-serif;*/
+
+body {
+	background: #FFF;
+	font-family: 'Josefin Sans', sans-serif;
+}
+
+h1.banner {
+	font-family: 'Montez', cursive;
+	font-size: 60pt;
+	color: #333;
+}
+
+h2.subbanner {
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 14pt;
+	color: #333;
+}
+
+h2 {
+	color: #333;
+	margin-bottom: 30px;
+	font-family: 'Montez', cursive;
+	font-size: 30pt;
+	padding-top: 20px;
+}
+
+p, ul {
+	text-align: justify;
+	font-size: 14pt;
+	line-height: 1.2em;
+}
+
+a, a:hover {
+	color: #A1353D;
+	text-decoration:none;
+}
+
+strong {
+	font-size: 14pt;
+	line-height: 1.2em;
+}
