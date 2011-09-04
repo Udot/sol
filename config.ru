@@ -1,6 +1,6 @@
 require ::File.join( ::File.dirname(__FILE__), 'app' )
-require "remote_syslog_logger"
 if ENV['RACK_ENV'] == "production"
+  require "remote_syslog_logger"
   @current_path = File.expand_path(File.dirname(__FILE__))
   require "#{@current_path}/lib/remote_syslog"
 
