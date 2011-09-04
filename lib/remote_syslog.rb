@@ -1,11 +1,6 @@
-require 'uri'
-
 class RemoteSyslog
-  def initialize(uri)
-    uri = URI.parse(uri)
-    @logger = RemoteSyslogLogger.
-      new(uri.host, uri.port,
-          :local_hostname => "#{ENV['APP_NAME']}-#{ENV['PS']}")
+  def initialize(host, port)
+    @logger = RemoteSyslogLogger.new(host, port, {:program => 'git_front'})
   end
 
   def write(str)

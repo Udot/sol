@@ -25,10 +25,6 @@ class MyApp < Sinatra::Application
 		set :css_files, :blob
 		set :js_files,  :blob
 		MinifyResources.minify_all
-    require 'lib/remote_syslog'
-
-    logger = RemoteSyslog.new(Settings.remote_log_url)
-    use Rack::CommonLogger, logger
 	end
 
 	configure :development do
@@ -36,8 +32,6 @@ class MyApp < Sinatra::Application
     set :show_exceptions, true
 		set :css_files, MinifyResources::CSS_FILES
 		set :js_files,  MinifyResources::JS_FILES
-		logger = Logger.new("log/#{settings.environment.to_s}.log")
-		use Rack::CommonLogger, logger
 	end
 
 	helpers do
