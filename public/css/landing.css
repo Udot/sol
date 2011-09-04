@@ -16,6 +16,7 @@ h1.banner {
 h2.subbanner {
 	font-family: 'Josefin Sans', sans-serif;
 	font-size: 14pt;
+	font-weight: normal;
 	color: #333;
 }
 
