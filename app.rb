@@ -28,6 +28,12 @@ class MyApp < Sinatra::Application
 		MinifyResources.minify_all
 		logger = RemoteSyslog.new(Settings.remote_log_host,Settings.remote_log_port)
 		use Rack::CommonLogger, logger
+
+    helpers do
+      def logger
+        request.logger
+      end
+    end
 	end
 
 	configure :development do
