@@ -1,16 +1,13 @@
 # workers
 worker_processes 2
 
-# user / group
-#user "www-data","www-data"
-
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
 working_directory "/var/www/hosts/git_front/current"
 shared_dir = "/var/www/hosts/git_front/shared"
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
-listen 8081, :tcp_nopush => true
+listen 8080, :tcp_nopush => true
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 30
@@ -23,17 +20,3 @@ pid "#{shared_dir}/pids/unicorn-git_front.pid"
 # so prevent them from going to /dev/null when daemonized here:
 stderr_path "#{shared_dir}/log/unicorn-git_front.stderr.log"
 stdout_path "#{shared_dir}/log/unicorn-git_front.stdout.log"
-
-# combine REE with "preload_app true" for memory savings
-# http://rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
-preload_app true
-GC.respond_to?(:copy_on_write_friendly=) and
-  GC.copy_on_write_friendly = true
-
-before_fork do |server, worker|
-  
-end
-
-after_fork do |server, worker|
-
-end
