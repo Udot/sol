@@ -13,6 +13,10 @@ h1.banner {
 	color: #333;
 }
 
+h3.main_title a {
+	font-family: 'Montez', cursive;
+}
+
 h2.subbanner {
 	font-family: 'Josefin Sans', sans-serif;
 	font-size: 14pt;
