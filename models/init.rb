@@ -1,4 +1,5 @@
 # encoding: utf-8
+require_relative "../lib/remote_syslog"
 DataMapper::Logger.new($stdout, :debug) if settings.environment.to_s == "development"
 DataMapper::Logger.new(RemoteSyslog.new(Settings.remote_log_host,Settings.remote_log_port), :info) unless settings.environment.to_s == "development"
 

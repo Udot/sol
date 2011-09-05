@@ -4,8 +4,8 @@ require "bundler/setup"
 
 # get all the gems in
 Bundler.require(:default)
-DataMapper::Logger.new($stdout, :debug)
 
+RailsConfig.load_and_set_settings("./config/settings.yml")
 require './models/init'
 
 class Setup < Thor
