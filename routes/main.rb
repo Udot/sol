@@ -72,6 +72,12 @@ class MyApp < Sinatra::Application
     get '/test' do
       haml "public/index".to_sym
     end
+    get '/mu-c9478619-b3ea1fef-e218a7ee-09081759' do
+      '42'
+    end
+    get '/mu-c9478619-b3ea1fef-e218a7ee-09081759/' do
+      '42'
+    end
   end
 
   class LoginManager < Sinatra::Base
