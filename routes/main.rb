@@ -12,16 +12,11 @@ class MyApp < Sinatra::Application
 
     Warden::Strategies.add(:password) do
 
-      def logger
-        LOGGER
-      end
-
       def valid?
         params["email"] || params["password"]
       end
 
       def authenticate!
-        logger.info "#{params['email']}, #{params['password']}"
         u = User.authenticate(params["email"], params["password"])
         u.nil? ? fail!("Could not log in") : success!(u)
       end
