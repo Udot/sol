@@ -48,7 +48,7 @@ module MercureApi
         response = http.request(req)
       end
     rescue Errno::ECONNREFUSED
-      return false
+        return [503, "unavailable"]
     end
     return [response.code, response.body]
   end
@@ -57,13 +57,17 @@ module MercureApi
     http_r = Net::HTTP.new(Settings.mercure_api.host, Settings.mercure_api.port)
     http_r.use_ssl = Settings.mercure_api.ssl
     response = nil
-    http_r.start() do |http|
-      req = Net::HTTP::Post.new(request, initheader = {'Content-Type' =>'application/json'})
-      req.add_field("USERNAME", Settings.mercure_api.username)
-      req.add_field("TOKEN", Settings.mercure_api.token)
-      req.body = payload
-      req.set_form_data(payload)
-      response = http.request(req)
+    begin
+      http_r.start() do |http|
+        req = Net::HTTP::Post.new(request, initheader = {'Content-Type' =>'application/json'})
+        req.add_field("USERNAME", Settings.mercure_api.username)
+        req.add_field("TOKEN", Settings.mercure_api.token)
+        req.body = payload
+        req.set_form_data(payload)
+        response = http.request(req)
+      end
+    rescue Errno::ECONNREFUSED
+      return [503, "unavailable"]
     end
     return [response.code, response.body]
   end
