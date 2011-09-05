@@ -18,35 +18,49 @@
     %script(type="text/javascript" src="/js/bootstrap.js")
     %script(type="text/javascript" src="/js/application.js")
   %body{id:@action}
-    - if env['warden'].user != nil
-      %div.topbar-wrapper{:style => "z-index: 5;"}
-        %div.topbar
-          %div.fill
-            %div.container
-              %h3.main_title
-                %a{:href => "#"} Sol
-              %ul
+    %div.topbar-wrapper{:style => "z-index: 5;"}
+      %div.topbar
+        %div.fill
+          %div.container
+            %h3.main_title
+              %a{:href => "#"} Sol
+            %ul
+              - if (@active == "about")
+                %li
+                  %a{:href => "/"} Home
                 %li.active
-                  %a{:href => "#"} Home
+                  %a{:href => "/about"} About
                 %li
-                  %a{:href => "#about"} About
+                  %a{:href => "/contact"} Contact
+              - elsif (@active == "contact")
                 %li
-                  %a{:href => "#contact"} Contact
-              %ul.nav.secondary-nav
-                - if env['warden'].user == nil
-                  %li.menu
-                    %a{:href => "/login"} Login
-                  %li
-                    %a{:href => "/signup"} Signup
-                - else
-                  %li.menu
-                    %a.menu{:href => "#"}= env['warden'].user.name
-                    %ul.menu-dropdown
-                      %li
-                        %a{:href => "#"} Preferences
-                      %li.divider
-                      %li
-                        %a{:href => "/logout"} Logout
+                  %a{:href => "/"} Home
+                %li
+                  %a{:href => "/about"} About
+                %li.active
+                  %a{:href => "/contact"} Contact
+              - else
+                %li.active
+                  %a{:href => "/"} Home
+                %li
+                  %a{:href => "/about"} About
+                %li
+                  %a{:href => "/contact"} Contact
+            %ul.nav.secondary-nav
+              - if env['warden'].user == nil
+                %li.menu
+                  %a{:href => "/login"} Login
+                %li
+                  %a{:href => "/signup"} Signup
+              - else
+                %li.menu
+                  %a.menu{:href => "#"}= env['warden'].user.name
+                  %ul.menu-dropdown
+                    %li
+                      %a{:href => "#"} Preferences
+                    %li.divider
+                    %li
+                      %a{:href => "/logout"} Logout
                 
     %div.container-fluid
       %div.sidebar

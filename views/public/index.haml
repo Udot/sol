@@ -8,55 +8,8 @@
   %div.span12
     %p
       %strong Sol
-      is designed to be a manageable, modular, hosting platform for Ruby apps. It provides a web interface to create, scale, and monitor your Ruby apps, a git entry point to push your code, a chef repository to handle servers bootstrapping and configuration management, ruby apps packaging and deployment, and a centralised logging service.
-    %p
-      The main idea is that, sometimes,
-      %em PaaS
-      is not the tool for your needs. Sometimes you need tighter control on the data, and the costs, or you have some servers idling in a bay, ... Don't lie to yourself : setting up and managing a hosting environment is a lot of work. But when you do have the knowledge, the tools and the needs to do so, then it's handy to have a tool to do that.
-    %p
-      %strong Sol
-      is at early stages of development and tests. Yet, already some modules have been published on the
-      %a{:href => "http://github.com/Udot"} github
-      page of the project. More will be released as development, tests and deployment go on.
+      is running. Congratulations !
 
-%div.row
-  %div.span6
-    %h2 Chef
-    %p
-      %a{:href => "http://www.opscode.com/chef/"} Chef
-      is one of the two big integration framework written in Ruby. It is a handy tool to setup and manage sets of servers. Thus it is a
-      %em defacto
-      requisite for a proper hosting platform.
-    %h2 OpenSource
-    %p We believe that FOSS is the way to build secure, sustainable, innovative tools. That's why all the platform will be released under OpenSource licenses (MIT, GPL, Apache, depending on the modules).
-
-    %h2 Decentralized
-    %p
-      A big node is easy to crash, that's why
-      %strong Sol
-      is cut down into small modules that can be hosted by different servers. Each module is doing one task then passing the ball to the next one. This also ensures an easier code review, maintenance and evolutivity.
-
-  %div.span6
-    %h2 Linux
-    %p Debian GNU/Linux is the most stable open source OS platform available. It has been chosen as primary platform for the architecture but support for more GNU/Linux or BSD distributions will be encouraged.  
-
-    %h2 U
-    %p
-      The cloud brings flexibility and ease to deploy apps, yet we think that this should not come with bigger risks to your data and your clients'. That's why this platform is designed to use Cloud infrastructures (
-      %em RackSpace only at the moment
-      ) but only as a hosting environment. All the rest (database, cache, webservers, load balancers, ...) are provided by the
-      %strong Sol platform.
-      In this age of devops and polyglot developers we think that we can take the time to manage properly our platform. That way you stay in control.
-
-
-%div.row
-  %div.span12
-    %h2 Built on
-    %p
-      %strong Sol
-      is built using : Ruby, Sinatra, Redis, Syslog, Debian GNU/Linux, PostgreSQL, Git, RackSpace.
-  %div.span12
-    %h2 Info
     %ul
       %li Status : very early stages. Only part of the platform is published.
       %li

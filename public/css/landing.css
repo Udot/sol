@@ -13,6 +13,10 @@ h1.banner {
 	color: #333;
 }
 
+div.content {
+	margin-top: 110px;
+}
+
 h3.main_title a {
 	font-family: 'Montez', cursive;
 }
