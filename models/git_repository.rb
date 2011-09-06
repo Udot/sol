@@ -18,7 +18,7 @@ class GitRepository
   belongs_to :egg
 
   def generate_path
-    self.path = name.gsub(/\s/,'_').downcase.gsub(/[àáâãäå]/,'a').gsub(/æ/,'ae').gsub(/ç/, 'c').gsub(/[èéêë]/,'e').gsub(/[üùû]/,'u').gsub(/[œ]/, 'oe')
+    self.path = name.gsub(/^\.*/,'').gsub(/\s/,'_').downcase.gsub(/[àáâãäå]/,'a').gsub(/æ/,'ae').gsub(/ç/, 'c').gsub(/[èéêë]/,'e').gsub(/[üùû]/,'u').gsub(/[œ]/, 'oe')
   end
 
   def remote_url
