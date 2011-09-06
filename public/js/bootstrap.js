@@ -73,7 +73,7 @@ $(document).ready(function(){
   // Disable certain links in docs
   // =============================
 
-  $('ul.pills a, .pagination a, .well .btn, .actions .btn, .alert-message .btn, a.close').click(function(e) {
+  $('ul.pills a, .pagination a, .well .btn, .alert-message .btn, a.close').click(function(e) {
     e.preventDefault();
   });
 
