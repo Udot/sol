@@ -51,14 +51,12 @@
               - if env['warden'].user == nil
                 %li.menu
                   %a{:href => "/login"} Login
-                %li
-                  %a{:href => "/signup"} Signup
               - else
                 %li.menu
                   %a.menu{:href => "#"}= env['warden'].user.name
                   %ul.menu-dropdown
                     %li
-                      %a{:href => "#"} Preferences
+                      %a{:href => "/users/#{env['warden'].user.id}/edit"} Preferences
                     %li.divider
                     %li
                       %a{:href => "/logout"} Logout
