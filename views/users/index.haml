@@ -23,6 +23,5 @@
               %td
                 %a.btn.small.primary{:href => "/users/#{user.id}"} Show
                 %a.btn.small{:href => "/users/#{user.id}/edit"} Edit
-                - disabled = ""
                 - if (user.id != env['warden'].user.id)
-                  %a.btn.small.danger{:href => "/users/#{user.id}", :class => disabled, :"data-confirm" => "Are you sure ?", :"data-method" => "delete", :rel => "nofollow"} Destroy
+                  %a.btn.small.danger{:href => "/users/#{user.id}", :"data-confirm" => "Are you sure ?", :"data-method" => "delete", :rel => "nofollow"} Destroy

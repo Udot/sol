@@ -62,4 +62,11 @@ class MyApp < Sinatra::Application
     redirect "/keys", :notice => "key updated."
   end
 
+  delete "/keys/:id" do    
+    env['warden'].authenticate!
+    key = SshKey.get(params[:id])
+    redirect "/keys" unless env['warden'].user.id == key.user.id
+    key.destroy
+    redirect "/keys", :notice => "key has been deleted"
+  end
 end

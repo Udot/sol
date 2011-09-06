@@ -21,6 +21,6 @@
               %td= key.login
               %td= key.kind
               %td
-                %a{:href => "/keys/#{key.id}"} Show
-                %a{:href => "/keys/#{key.id}/edit"} Edit
-                %a{:href => "/keys/#{key.id}/destroy"} Destroy
+                %a.btn.small.primary{:href => "/keys/#{key.id}"} Show
+                %a.btn.small{:href => "/keys/#{key.id}/edit"} Edit
+                %a.btn.small.danger{:href => "/keys/#{key.id}", :"data-confirm" => "Are you sure ?", :"data-method" => "delete", :rel => "nofollow"} Destroy
