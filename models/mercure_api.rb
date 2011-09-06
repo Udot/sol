@@ -12,6 +12,12 @@ module MercureApi
     #return self.other_post(username, repository_path)
   end
 
+  def destroy(username, repository)
+    repository_path = "#{Settings.repos.root_dir}/#{username}/#{repository}.git"
+    payload = {"user" => username, "path" => repository_path}
+    return self.post("/repositories/destroy", payload)
+  end
+
   def status(username, repository)
     repository_path = "#{Settings.repos.root_dir}/#{username}/#{repository}.git"
     payload = {"path" => repository_path}

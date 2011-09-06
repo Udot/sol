@@ -53,6 +53,14 @@ class GitRepository
     return "loose"
   end
 
+  def remote_destroy
+    request = MercureApi.destroy(user.login, path)
+    if request != nil
+      return request # [code,response body]
+    end
+    return [500, "didn't answer"]
+  end
+
   def is_loose?
     return true if status == "loose"
     return false
