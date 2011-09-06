@@ -9,11 +9,11 @@ class User
   property :id, Serial
   property :email, String, :required => true, :index => :login, :unique => true, :unique_index => true, :format => :email_address
   property :crypted_pass, String, :length => 60..60, :required => true, :writer => :protected
-  property :name, String, :unique => true, :required => true, :length => 3..30, :message => "Your name must not be blank and at least 3 characters.", :unique_index => true
+  property :name, String, :required => true, :length => 3..30, :message => "Your name must not be blank and at least 3 characters."
   property :created_at, DateTime, :default => proc { DateTime.now }
   property :login, String, :unique => true, :required => true, :length => 4..15, :message => "Your login must not be blank and at least 4 characters long.", :unique_index => true
   property :token, String, :unique => true, :default => proc { User.generate_token }
-  property :role, String, :default => proc { User.default_role }
+  property :role, String, :default => proc { User.default_role } # "admin" or "normal"
 
   attr_accessor :password, :password_confirmation, :password_reset
   

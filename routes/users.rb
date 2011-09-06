@@ -11,6 +11,13 @@ class MyApp < Sinatra::Application
     end
   end
 
+  get "/users/new" do
+    env['warden'].authenticate!
+    @user = User.new
+    @user.role = "normal"
+    haml "users/new".to_sym
+  end
+
   get "/users/:id" do
     env['warden'].authenticate!
     @active_tab = "users"
@@ -25,6 +32,16 @@ class MyApp < Sinatra::Application
     haml "users/edit".to_sym
   end
 
+  post "/users" do
+    env['warden'].authenticate!
+    redirect "/users" unless env['warden'].user.admin?
+    user = User.create(:role => params[:role], :login => params[:login], :name => params[:name], :email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation])
+    if user.save
+      redirect "/users", :notice => "user #{user.name} created !"
+    end
+    redirect "/users", :error => "user #{user.name} not created !"
+  end
+
   post "/users/:id/update" do
     env['warden'].authenticate!
     user = User.get(params[:id])
@@ -33,17 +50,21 @@ class MyApp < Sinatra::Application
     user.role = params[:role] if (env['warden'].user.admin? && user.id != env['warden'].user.id)
     user.save
     if ((params[:password] != "") && (params[:password_confirmation] != "") && (params[:password] == params[:password_confirmation]))
-      logger.info("hoy in")
       user.reset_password(params[:password], params[:password_confirmation])
       if user.save
-        logger.info("checked !")
       else
-        logger.info("could not save")
       end
     elsif ((params[:password] != "") && (params[:password_confirmation] != "") && (params[:password] != params[:password_confirmation]))
       redirect "/users/#{user.id}/edit", :error => "Passwords don't match."
     end
     logger.info("oulallala")
     redirect "/users/#{user.id}"
+  end
+
+  delete "/users/:id" do    
+    env['warden'].authenticate!
+    redirect "/users" unless env['warden'].user.admin?
+    User.get(params[:id]).destroy
+    redirect "/users", :notice => "user has been deleted"
   end
 end
