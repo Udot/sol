@@ -22,10 +22,13 @@ td.error {
 	color: #B63535;
 }
 
-span.secret {
-	display: none;
-}
 td.token span {
+	color: #DDDDDD;
 	font-family: courier;
 	font-size: 8pt;
+}
+
+span.secret {
+	color: #222222;
+	display: none;
 }

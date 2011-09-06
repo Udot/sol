@@ -24,7 +24,7 @@ $(document).ready(function(){
 		token_span = $(this).attr('rel');
 		hide_str = token_span.replace(/token/i,'hide');
 		$("#"+hide_str).toggle();
-		$("#"+token_span).toggle();
+		$("#"+token_span).toggle().css("color", "#222222");
 		if ($(this).hasClass("info")) {
 			$(this).html("Hide");
 			$(this).removeClass('info');
