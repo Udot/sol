@@ -38,7 +38,7 @@ class MyApp < Sinatra::Application
     redirect "/eggs", :notice => "Egg updated."
   end
 
-  post "/eggs/:id/destroy" do
+  delete "/eggs/:id/destroy" do
     env['warden'].authenticate!
     egg = Egg.get(params[:id])
     redirect "/eggs", :error => "This egg doesn't belong to you." unless egg.user.id == env['warden'].user.id
