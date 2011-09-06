@@ -34,7 +34,7 @@
             %tr
               %td= egg.name
               %td= egg.git_repository.updated_status
-              %td= egg.git_repository.last_rev.slice(0..8) + '..' if (egg.git_repository && egg.git_repository.last_rev)
+              %td.tipsy_z{:title => "last pushed rev"}= egg.git_repository.last_rev.slice(0..8) + '..' if (egg.git_repository && egg.git_repository.last_rev)
 %div.row
   %div.span12.columns
     %h3 Sub modules
