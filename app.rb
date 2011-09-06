@@ -41,6 +41,14 @@ class MyApp < Sinatra::Application
     set :show_exceptions, true
 		set :css_files, MinifyResources::CSS_FILES
 		set :js_files,  MinifyResources::JS_FILES
+		LOGGER = Logger.new("log/#{settings.environment.to_s}.log")
+		use Rack::CommonLogger, LOGGER
+
+    helpers do
+      def logger
+        LOGGER
+      end
+    end
 	end
 
 	helpers do
