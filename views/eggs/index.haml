@@ -19,8 +19,8 @@
               %td= egg.name
               %td NC
               %td= egg.git_repository.remote_url if egg.git_repository
-              %td= egg.git_repository.updated_status
+              %td= egg.git_repository.updated_status if egg.git_repository
               %td
-                %a{:href => "/eggs/#{egg.id}"} Show
-                %a{:href => "/eggs/#{egg.id}/edit"} Edit
-                %a{:href => "/eggs/#{egg.id}/destroy", :"data-confirm" => "Are you sure ?", :"data-method" => "delete", :rel => "nofollow"} Destroy
+                %a.btn.small.info{:href => "/eggs/#{egg.id}"} Show
+                %a.btn.small{:href => "/eggs/#{egg.id}/edit"} Edit
+                %a.btn.small.danger{:href => "/eggs/#{egg.id}/destroy", :"data-confirm" => "Are you sure ?", :"data-method" => "delete", :rel => "nofollow"} Destroy
