@@ -25,3 +25,7 @@ td.error {
 span.secret {
 	display: none;
 }
+td.token span {
+	font-family: courier;
+	font-size: 8pt;
+}
