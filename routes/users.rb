@@ -32,13 +32,18 @@ class MyApp < Sinatra::Application
     user.email = params[:email]
     user.role = params[:role] if (env['warden'].user.admin? && user.id != env['warden'].user.id)
     user.save
-    if (params[:password] && params[:password_confirmation]) && ((params[:password] != "") && (params[:password_confirmation] != "") && (params[:password] == params[:password_confirmation]))
-      user.password = params[:password]
-      user.password_confirmation = params[:password_confirmation]
-      user.save
-    elsif (params[:password] && params[:password_confirmation]) && ((params[:password] != "") && (params[:password_confirmation] != "") && (params[:password] != params[:password_confirmation]))
+    if ((params[:password] != "") && (params[:password_confirmation] != "") && (params[:password] == params[:password_confirmation]))
+      logger.info("hoy in")
+      user.reset_password(params[:password], params[:password_confirmation])
+      if user.save
+        logger.info("checked !")
+      else
+        logger.info("could not save")
+      end
+    elsif ((params[:password] != "") && (params[:password_confirmation] != "") && (params[:password] != params[:password_confirmation]))
       redirect "/users/#{user.id}/edit", :error => "Passwords don't match."
     end
+    logger.info("oulallala")
     redirect "/users/#{user.id}"
   end
 end

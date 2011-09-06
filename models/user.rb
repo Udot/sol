@@ -20,7 +20,7 @@ class User
   validates_presence_of :password, :password_confirmation, :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?
   
-  before :valid?, :crypted_pass
+  #before :valid?, :crypted_pass
 
   has n, :eggs
   has n, :ssh_keys
@@ -33,16 +33,16 @@ class User
   end
 
   def reset_password(password, confirmation)
-    self.password_reset = true
-    self.password = password
-    self.password_confirmation = confirmation
-    self.save
+    if (password == confirmation)
+      self.password_reset = true
+      self.password = password
+      self.password_confirmation = confirmation
+      self.crypt_password
+    end
   end
 
   def crypt_password
-    if password
-      self.crypted_pass = BCrypt::Password.create(password)
-    end
+    self.crypted_pass = BCrypt::Password.create(password) if password
   end
 
   def crypted_pass
