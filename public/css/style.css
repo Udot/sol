@@ -32,3 +32,5 @@ span.secret {
 	color: #222222;
 	display: none;
 }
+
+a.secretB { margin-left: 10px;}

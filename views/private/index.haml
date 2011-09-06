@@ -51,8 +51,8 @@
           - 40.times { sub_t << '*' }
           %tr
             %td Git gate
-            %td= Settings.mercure_api.username
-            %td.token
+            %td.tipsy_z{:title => "Git gate api user name"}= Settings.mercure_api.username
+            %td.token.tipsy_z{:title => "Git gate api token"}
               %span.secret#token1= Settings.mercure_api.token
               %span#hide1= sub_t
               %a.btn.info.secretB{:rel => "token1"} Show
@@ -60,12 +60,13 @@
           - if ApiUser.count > 0
             %tr
               %td Git shell
-              %td= ApiUser.first.login
-              %td.token
+              %td.tipsy_z{:title => "shell api user name"}= ApiUser.first.login
+              %td.token.tipsy_z{:title => "shell api token"}
                 %span.secret#token2= ApiUser.first.token
                 %span#hide2= sub_t
                 %a.btn.info.secretB{:rel => "token2"} Show
-              %td not available
+              %td
+                %a not available
           - else
             %tr
               %td Git shell

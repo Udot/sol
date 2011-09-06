@@ -33,4 +33,8 @@ $(document).ready(function(){
 			$(this).addClass('info');
 		}
 	});
+	$(function() {
+			$(".tipsy_z").tipsy({fade: true, gravity: 'n'});
+		});
+	//$("#tipsy").tipsy({fade: true, gravity: 's'});
 });
