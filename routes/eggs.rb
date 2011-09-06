@@ -46,6 +46,7 @@ class MyApp < Sinatra::Application
     if egg.git_repository
       destroyed_status = egg.git_repository.remote_destroy
       egg.git_repository.destroy if (destroyed_status[0].to_i == 200)
+      egg.save
     end
     if (not [401, 500, 503].include?(destroyed_status[0].to_i)) || (egg.git_repository == nil)
       egg.destroy
