@@ -5,6 +5,7 @@ require "json"
 module MercureApi
   extend self
   def create(username, repository)
+    # /var/gits/<username>/<repository>.git
     repository_path = "#{Settings.repos.root_dir}/#{username}/#{repository}.git"
     payload = {"user" => username, "path" => repository_path}
     return self.post("/repositories/create", payload)
