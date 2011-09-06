@@ -43,9 +43,14 @@ class MyApp < Sinatra::Application
     egg = Egg.get(params[:id])
     redirect "/eggs", :error => "This egg doesn't belong to you." unless egg.user.id == env['warden'].user.id
     destroyed_status = [500, "no git repository linked"]
-    destroyed_status = egg.git_repository.remote_destroy if egg.git_repository
-    egg.git_repository.destroy
-    egg.destroy
+    if egg.git_repository
+      destroyed_status = egg.git_repository.remote_destroy
+      egg.git_repository.destroy if (destroyed_status[0] == 200)
+    end
+    if (not [401, 500, 503].include?(destroyed_status[0])) || (!egg.git_repository)
+      egg.destroy
+      destroyed_status = [200, "egg deleted"]
+    end
     flash_class = "notice"
     flash_class = "error" if [401, 500, 503].include?(destroyed_status[0])
     redirect "/eggs", flash_class.to_sym => destroyed_status[1]
