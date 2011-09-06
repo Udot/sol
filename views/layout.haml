@@ -74,7 +74,7 @@
         - if flash[:notice]
           %div.alert-message.success
             %a.close{:href => "#"} &times;
-            %p= flash[notice]
+            %p= flash[:notice]
         - if flash[:warning]
           %div.alert-message.warning
             %a.close{:href => "#"} &times;
