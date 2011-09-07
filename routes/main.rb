@@ -87,11 +87,11 @@ class MyApp < Sinatra::Application
 
     post '/unauthenticated/?' do
       status 401
-      haml :login
+      haml :"public/login"
     end
 
     get '/login/?' do
-      haml :login
+      haml :"public/login"
     end
 
     post '/login/?' do
