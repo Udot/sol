@@ -10,7 +10,7 @@
     %meta(name="author" content="MyAppAuthor")
     %link(rel="icon" type="image/png" href="/favicon.png")
     %title Sol, an open source hosting platform for Ruby apps
-    %link(type="text/css" rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.1.1.min.css")
+    %link(type="text/css" rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css")
     %link(type="text/css" rel="stylesheet" href="/css/style.css")
     %link(type="text/css" href='http://fonts.googleapis.com/css?family=Montez|Josefin+Sans' rel='stylesheet')
     %link(type="text/css" rel="stylesheet" href="/css/landing.css")
@@ -79,7 +79,7 @@
           %div.alert-message.warning
             %a.close{:href => "#"} &times;
             %p= flash[:warning]
-        - if env['warden'].user
+        - if env['warden'].user && (@active != ("about" && "contact"))
           %div.row
             %div.span16.columns
               %ul.tabs

@@ -1,5 +1,5 @@
 %div.row
-  %div.span12.columns
+  %div.span16.columns
     %h2 Dashboard
     %legend Status of the moutain
     %table.zebra-striped{:style => "margin-bottom: 0;"}
@@ -19,7 +19,7 @@
               %td
                 %a{:href => service["url"]}
 %div.row
-  %div.span12.columns
+  %div.span16.columns
     %h3 Eggs
     %legend Is the coop ok ?
     %table.zebra-striped{:style => "margin-bottom: 0;"}
@@ -36,7 +36,7 @@
               %td= egg.git_repository.updated_status
               %td.tipsy_z{:title => "last pushed rev"}= egg.git_repository.last_rev.slice(0..8) + '..' if (egg.git_repository && egg.git_repository.last_rev)
 %div.row
-  %div.span12.columns
+  %div.span16.columns
     %h3 Sub modules
     %legend modules api keys (keep them secret)
     %table.zebra-striped{:style => "margin-bottom: 0;"}

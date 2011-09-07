@@ -43,3 +43,8 @@ div.login_form {
 	border-bottom:0;
 	padding-top: 25px;
 }
+
+/* resizing default topbar menu item size */
+div.topbar li {
+	font-size: 12pt;
+}
