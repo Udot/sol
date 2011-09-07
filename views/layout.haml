@@ -63,8 +63,7 @@
                     %li
                       %a{:href => "/logout"} Logout
                 
-    %div.container-fluid
-      %div.sidebar
+    %div.container
       %div.content
         - if flash[:error]
           %div.alert-message.error
@@ -82,7 +81,7 @@
             %p= flash[:warning]
         - if env['warden'].user
           %div.row
-            %div.span12.columns
+            %div.span16.columns
               %ul.tabs
                 - if (@active_tab == "dashboard")
                   %li.active
