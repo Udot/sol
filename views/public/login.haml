@@ -1,11 +1,19 @@
 %div.row
-  %div.span10.offset1.columns
-    %form{:action => "/login", :method => "post"}
-      email
-      %input.field{:name => "email", :type => "text"}
-      %br
-      %div.clear
-      password
-      %input.field{:name => "password", :type => "password"}
-      %br
-      %input.btn.primary{:name => "Submit", :type => "Submit", :value => "Login"}
+  %div.span8.offset4.columns
+    %div.login_form
+      %form{:action => "/login", :method => "post"}
+        %fieldset
+          %legend Login
+          .clearfix
+            %label{:for => ""} Email
+            .input
+              %input{:name => "email", :type => "text"}/
+          / /clearfix
+          .clearfix
+            %label{:for => ""} Password
+            .input
+              %input{:name => "password", :type => "password"}/
+          / /clearfix
+
+          .actions
+            %button#submit_user.btn.primary{:type => "submit"}> Login

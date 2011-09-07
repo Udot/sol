@@ -34,3 +34,12 @@ span.secret {
 }
 
 a.secretB { margin-left: 10px;}
+
+/* login zone style */
+div.login_form {
+	border: 1px solid #DDD;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	border-bottom:0;
+	padding-top: 25px;
+}
