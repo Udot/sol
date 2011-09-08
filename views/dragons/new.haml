@@ -1,0 +1,19 @@
+%div.row
+  %div.span12.columns
+    %h2 Add an dragon
+
+%div.row
+  %div.span6.columns
+    %form{:action => "/dragons", :method => "post"}
+      %fieldset
+        %legend Here are the coming details of your dragon
+        .clearfix
+          %label{:for => ""} Name
+          .input
+            %input.uneditable-input{:name => "name", :type => "text", :value => @dragon_name}/
+            %span.help-block
+              This name will only be used for "office" purpose.
+        / /clearfix
+        
+        .actions
+          %button#submit_user.btn.primary{:type => "submit"}> Create

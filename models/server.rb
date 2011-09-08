@@ -1,3 +1,5 @@
+# encoding : utf-8
+require 'date'
 class Dragon
   include DataMapper::Resource
 
@@ -7,15 +9,19 @@ class Dragon
   has n, :ssh_keys, :through => Resource
 
   property :id, Serial
-  property :name, Text, :default => proc { Server.generate_name }
+  property :name, Text, :default => proc { Dragon.generate_name }
   property :user_id, Integer
   property :egg_id, Integer
   property :created_at, DateTime
   property :updated_at, DateTime
-  property :token, String, :default => proc { Server.generate_token }
+  property :token, String, :default => proc { Dragon.generate_token }
+  # chef related
+  property :role, String, :default => "role[www-host]"
   # rackspace related
   property :image_name, String
+  property :image_id, Integer, :default => 10194286
   property :flavor_name, String
+  property :flavor_id, Integer, :default => 1
   property :state, String
   property :progress, Integer
   property :provider_id, Integer, :unique => true
@@ -23,12 +29,17 @@ class Dragon
   property :public_address, String
   property :private_address, String
   # sol operation
-  property :status, String
-  property :operation_start_time, String
-  property :operation_finish_time, String
+  property :status, String, :default => "empty"
+  property :operation_start_time, DateTime
+  property :operation_finish_time, DateTime
 
   def self.generate_name
-    Settings
+    num = 1
+    if Dragon.count > 0
+      last_server = Dragon.last
+      num = last_server.name.split('-').last.to_i + 1
+    end
+    return Settings.basename + "-" + num.to_s
   end
 
   def self.generate_token
@@ -62,21 +73,30 @@ class Dragon
     #      "started_at" => string,               # time of start of the process
     #      "finished_at" => string,              # time of finish of the status
     # }
-    r_status = JSON.parse(redis_status.get(token))
-    self.public_ip = r_status['public_ip']
-    self.private_ip = r_status['private_ip']
-    self.provider_id = r_status['provider_id']
-    self.host_id = r_status['host_id']
-    self.state = r_status['state']
-    self.progress = r_status['progress']
-    self.image_name = r_status['image_name']
-    self.flavor_name = r_status['flavor_name']
-    self.operation_start_time = r_status['started_at']
-    self.operation_finish_time = r_status['finished_at']
+    q_status = redis_status.get(token)
+    puts q_status
+    if q_status != nil
+      r_status = JSON.parse(q_status)
+      puts r_status
+      self.public_address = r_status['public_ip']
+      self.private_address = r_status['private_ip']
+      self.provider_id = r_status['provider_id'].to_i unless r_status['provider_id'] == ""
+      self.host_id = r_status['host_id'].to_i unless r_status['host_id'] == ""
+      self.state = r_status['state']
+      self.progress = r_status['progress'].to_i unless r_status['progress'] == ""
+      self.image_name = r_status['image_name']
+      self.flavor_name = r_status['flavor_name']
+      self.operation_start_time = DateTime.parse(r_status['started_at']) unless r_status['started_at'] == ""
+      self.operation_finish_time = DateTime.parse(r_status['finished_at']) unless r_status['finished_at'] == ""
+      self.status = r_status['status']
+    else
+      self.status = "failed"
+    end
+    self.save
   end
 
   def queue_in
-    redis_status = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.server_queue)
+    redis_queue = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.server_queue)
     redis_status = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.server_status)
     
     # queue in
@@ -88,23 +108,25 @@ class Dragon
     #      "flavor" => integer,      # server size 1 = 256MB, 2 = 512MB, 3 = 1024MB ..., default = 1 (if nil)
     #      "token" => string         # unique token to identify server, will be picked up by cuddy in /etc/sol_token.txt
     # }
-    queue = JSON.parse(redis_queue.get("queue"))
-    queue << {"name" => name, "role" => "role[www-host]"}
+    queue_r = redis_queue.get("queue")
+    queue = []
+    queue = JSON.parse(queue_r) unless queue_r == nil
+    queue << {"name" => name, "role" => role}
     redis_queue.set("queue", queue.to_json)
 
     # set initial status
-    arh = { "name" => nodename,
-      "image" => image,
-      "flavor" => flavor,
+    arh = { "name" => name,
+      "image" => image_id,
+      "flavor" => flavor_id,
       "role" => role,
-      "provider_id" => provider_id,
-      "host_id" => host_id,
-      "image_name" => image_name,
-      "flavor_name" => flavor_name,
-      "public_ip" => public_ip,
-      "private_ip" => private_ip,
-      "state" => state,
-      "progess" => progess,
+      "provider_id" => "",
+      "host_id" => "",
+      "image_name" => "",
+      "flavor_name" => "",
+      "public_ip" => "",
+      "private_ip" => "",
+      "state" => "",
+      "progess" => 0,
       "status" => "waiting",
       "started_at" => Time.now.to_s,
       "finished_at" => ""}

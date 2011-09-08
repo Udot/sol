@@ -1,0 +1,24 @@
+%div.row
+  %div.span12.columns
+    %h2 Dragons
+    %legend Manage your dragons
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th Name
+          %th Status
+          %th Token
+          %th
+            %a{:href => "/dragons/new"}
+              %img{:src => "/img/plus.png", :height => "20px"}
+      - if @dragons.count > 0
+        - @dragons.each do |dragon|
+          %tbody
+            %tr
+              %td= dragon.name
+              %td= dragon.status
+              %td= dragon.token
+              %td
+                %a.btn.small.info{:href => "/dragons/#{dragon.id}"} Show
+                %a.btn.small{:href => "/dragons/#{dragon.id}/edit"} Edit
+                %a.btn.small.danger{:href => "/dragons/#{dragon.id}", :"data-confirm" => "Are you sure ?", :"data-method" => "delete", :rel => "nofollow"} Destroy
