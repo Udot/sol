@@ -140,5 +140,7 @@ class Dragon
       :rackspace_auth_url => Settings.rackspace_auth_host)
     remote_server = connection.servers.get(provider_id)
     remote_server.destroy
+    redis_status = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.server_status)
+    redis_status.del(token)
   end
 end
