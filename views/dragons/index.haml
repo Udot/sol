@@ -8,6 +8,8 @@
           %th Name
           %th Status
           %th Token
+          %th IP
+          %th Provided ID
           %th
             %a{:href => "/dragons/new"}
               %img{:src => "/img/plus.png", :height => "20px"}
@@ -18,6 +20,8 @@
               %td= dragon.name
               %td= dragon.status
               %td= dragon.token
+              %td= dragon.public_address
+              %td= dragon.provider_id
               %td
                 %a.btn.small.info{:href => "/dragons/#{dragon.id}"} Show
                 %a.btn.small{:href => "/dragons/#{dragon.id}/edit"} Edit
