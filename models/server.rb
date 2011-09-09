@@ -111,7 +111,7 @@ class Dragon
     queue_r = redis_queue.get("queue")
     queue = []
     queue = JSON.parse(queue_r) unless queue_r == nil
-    queue << {"name" => name, "role" => role}
+    queue << {"name" => name, "role" => role, "token" => token}
     redis_queue.set("queue", queue.to_json)
 
     # set initial status
