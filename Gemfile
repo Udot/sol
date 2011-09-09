@@ -7,6 +7,7 @@ gem 'sinatra', '1.2.6'
 gem "thor"
 gem "rack-flash"
 gem "sinatra-redirect-with-flash"
+gem "fog"
 
 gem 'ruby-mysql', "2.9.3", :group => [:development, :test]
 gem "redis"
