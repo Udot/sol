@@ -27,7 +27,7 @@ class MyApp < Sinatra::Application
   delete "/dragons/:id" do
     env['warden'].authenticate!
     dragon = Dragon.get(params[:id])
-    dragon.remote_destroy
+    dragon.destroy_remote
     dragon.destroy
     redirect "/dragons", :notice => "Dragon destroyed"
   end
