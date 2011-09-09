@@ -132,4 +132,13 @@ class Dragon
       "finished_at" => ""}
     redis_status.set(token, arh.to_json)
   end
+
+  def destroy_remote
+    connection = Fog::Compute.new(:provider => "Rackspace",
+      :rackspace_api_key => Settings.rackspace_token,
+      :rackspace_username => Settings.rackspace_username,
+      :rackspace_auth_url => Settings.rackspace_auth_host)
+    remote_server = connection.servers.get(provider_id)
+    remote_server.destroy
+  end
 end
