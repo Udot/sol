@@ -143,4 +143,5 @@ class Dragon
     redis_status = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.server_status)
     redis_status.del(token)
   end
+
 end

@@ -60,4 +60,20 @@ class Egg
     config += "\t}\n"
     config += "}\n"
   end
+
+  # enqueue in redis db 0 for build
+  # "queue" is a jsoned Array, items are using following format :
+  #   {  "name" => string,           # the name of the app
+  #      "repository" => string,     # the url of the git repository
+  #      "db_string" => string,      # basis for pwd
+  #      "cuddy_token" => string     # the token of the host that will host it
+  #   }
+  def enqueue
+    redis_build_queue = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port,
+      :password => Settings.redis.password, :db => Settings.redis.build_queue)
+    queue = []
+    queue = JSON.parse(redis_build_queue.get("queue")) if redis_build_queue.get("queue") != nil
+    queue << {"name" => name, "repository" => git_repository.remote_url, "db_string" => "something", "cuddy_token" => dragon.token}
+    redis_build_queue.set("queue", queue.to_json)
+  end
 end

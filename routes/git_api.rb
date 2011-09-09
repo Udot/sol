@@ -32,6 +32,7 @@ class MyApp < Sinatra::Application
     end
   end
 
+  # git repository post via post-receive hook
   post '/api/git/push' do
     if not api_auth(env)
       # the git lib gateway doesn't have a proper api username and/or token
@@ -44,6 +45,7 @@ class MyApp < Sinatra::Application
       rep.last_rev = params[:rev]
       rep.last_update = Time.now
       rep.save
+      rep.egg.enqueue
       status 200
     else
       status 400
