@@ -4,6 +4,7 @@ class MyApp < Sinatra::Application
     env['warden'].authenticate!
     @active_tab = "dragons"
     @dragons = Dragon.all
+    @dragons.each { |s| s.get_status }
     haml "dragons/index".to_sym
   end
 
