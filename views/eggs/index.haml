@@ -1,5 +1,5 @@
 %div.row
-  %div.span12.columns
+  %div.span16.columns
     %h2 Eggs
     %legend Manage your eggs
     %table.zebra-striped{:style => "margin-bottom: 0;"}
@@ -9,6 +9,9 @@
           %th Status
           %th Repository
           %th Repository Status
+          %th Ip
+          %th token
+          %th Server status
           %th
             %a{:href => "/eggs/new"}
               %img{:src => "/img/plus.png", :height => "20px"}
@@ -20,6 +23,9 @@
               %td NC
               %td= egg.git_repository.remote_url if egg.git_repository
               %td= egg.git_repository.updated_status if egg.git_repository
+              %td= egg.dragon.status
+              %td= egg.dragon.token
+              %td= egg.dragon.public_address
               %td
                 %a.btn.small.info{:href => "/eggs/#{egg.id}"} Show
                 %a.btn.small{:href => "/eggs/#{egg.id}/edit"} Edit

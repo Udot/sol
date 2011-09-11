@@ -3,6 +3,7 @@ class MyApp < Sinatra::Application
   get "/eggs" do
     env['warden'].authenticate!
     @active_tab = "eggs"
+    Dragon.get_status
     @eggs = env["warden"].user.eggs
     haml "eggs/index".to_sym
   end
@@ -43,6 +44,11 @@ class MyApp < Sinatra::Application
     egg = Egg.get(params[:id])
     redirect "/eggs", :error => "This egg doesn't belong to you." unless egg.user.id == env['warden'].user.id
     destroyed_status = [500, "no git repository linked"]
+    if egg.dragon
+      dragon = egg.dragon
+      dragon.destroy_remote
+      dragon.destroy
+    end
     if egg.git_repository
       destroyed_status = egg.git_repository.remote_destroy
       egg.git_repository.destroy if (destroyed_status[0].to_i == 200)
@@ -60,10 +66,18 @@ class MyApp < Sinatra::Application
   post "/eggs" do
     env['warden'].authenticate!
     egg = Egg.create(:name => params[:name], :user_id => env['warden'].user.id)
+    # creating server
+    dragon = Dragon.create
+    dragon.queue_in
+    dragon.get_status
+    dragon.save
+    # creating repository
     egg.git_repository = GitRepository.create(:name => params[:name], :user_id => env['warden'].user.id, :egg_id => egg.id)
     egg.git_repository.generate_path
     egg.git_repository.remote_setup
     egg.git_repository.remote_status
+    # linking
+    egg.dragon = dragon
     egg.save
     redirect "/eggs", :notice => "Egg updated."
   end
