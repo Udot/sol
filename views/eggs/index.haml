@@ -9,9 +9,9 @@
           %th Status
           %th Repository
           %th Repository Status
-          %th Ip
-          %th token
           %th Server status
+          %th token
+          %th Ip
           %th
             %a{:href => "/eggs/new"}
               %img{:src => "/img/plus.png", :height => "20px"}
@@ -23,9 +23,9 @@
               %td NC
               %td= egg.git_repository.remote_url if egg.git_repository
               %td= egg.git_repository.updated_status if egg.git_repository
-              %td= egg.dragon.status
-              %td= egg.dragon.token
-              %td= egg.dragon.public_address
+              %td= egg.dragon ? egg.dragon.status : "no server"
+              %td= egg.dragon.token if egg.dragon
+              %td= egg.dragon.public_address if egg.dragon
               %td
                 %a.btn.small.info{:href => "/eggs/#{egg.id}"} Show
                 %a.btn.small{:href => "/eggs/#{egg.id}/edit"} Edit
