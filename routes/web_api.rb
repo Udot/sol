@@ -35,6 +35,30 @@ class MyApp < Sinatra::Application
     body "ok"
   end
 
+  post "/api/web/pubkey/?" do
+    if not api_auth(env)
+      # the git lib gateway doesn't have a proper api username and/or token
+      status 401
+      body "Unauthorized / Authentication failed"
+      return
+    end
+    data = JSON.parse(params)
+    if data["username"] && data["pub_key"] && (data["username"] == "pinpin")
+      user = User.get(:login => data["username"])
+      user.ssh_key.destroy unless user.ssh_key == nil
+      n_key = SshKey.create(:name => "default", :ssh_key => data["pub_key"], :deploy => true)
+      user.ssh_key = n_key
+      user.save
+      status 200
+      body "ok"
+    else
+      # one or both params are missing
+      status 400
+      body "some params missing or incorrect"
+      return
+    end
+  end
+
   post "/api/web/register/?" do
     if not api_auth(env)
       # the git lib gateway doesn't have a proper api username and/or token

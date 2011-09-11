@@ -53,6 +53,10 @@ class Dragon
     return Digest::SHA1.hexdigest(init_token)
   end
 
+  def self.get_status
+    Dragon.all.each { |d| d.get_status }
+  end
+
   def get_status
     # get status from redis
     redis_status = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.server_status)

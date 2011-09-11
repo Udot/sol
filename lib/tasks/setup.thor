@@ -1,6 +1,7 @@
 # encoding: utf-8
 require "rubygems"
 require "bundler/setup"
+require "digest/sha1"
 
 # get all the gems in
 Bundler.require(:default)
@@ -20,4 +21,17 @@ class Setup < Thor
       an_auser = ApiUser.create(:login => "shell_user")
     end
   end
+
+  desc "pinpin_init", "setup a user for pinpin"
+  def pinpin_init
+    user = User.get(:login => "pinpin")
+    if user == nil
+      rand_string = ""
+      42.times { rand_string += (0..9).to_a[rand(10)].to_s }
+      pass_string = Digest::SHA1::hexdigest(Time.now.to_s + rand_string)
+      user = User.create(:name => "pinpin", :email => "pinpin@something", :password => pass_string, :password_confirmation => pass_string, :login => "pinpin", :role => "normal")
+      user.save
+    end
+  end
+  
 end
