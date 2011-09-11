@@ -78,7 +78,6 @@ class Dragon
     #      "finished_at" => string,              # time of finish of the status
     # }
     q_status = redis_status.get(token)
-    puts q_status
     if q_status != nil
       r_status = JSON.parse(q_status)
       puts r_status
