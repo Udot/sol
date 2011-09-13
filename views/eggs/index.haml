@@ -7,6 +7,7 @@
         %tr
           %th Name
           %th Status
+          %th DB status
           %th Repository Status
           %th Server status
           %th
@@ -18,11 +19,9 @@
             %tr
               %td= egg.name
               %td NC
-              %td= egg.git_repository.remote_url if egg.git_repository
-              %td= egg.git_repository.updated_status if egg.git_repository
+              %td= egg.pg_database ? egg.pg_database.status : "no db"
+              %td= egg.git_repository ? egg.git_repository.updated_status : "no repository"
               %td= egg.dragon ? egg.dragon.status : "no server"
-              %td= egg.dragon.token if egg.dragon
-              %td= egg.dragon.public_address if egg.dragon
               %td
                 %a.btn.small.info{:href => "/eggs/#{egg.id}"} Show
                 %a.btn.small{:href => "/eggs/#{egg.id}/edit"} Edit
