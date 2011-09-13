@@ -4,6 +4,7 @@ class MyApp < Sinatra::Application
     env['warden'].authenticate!
     @active_tab = "eggs"
     Dragon.get_status
+    PgDatabase.update_status
     @eggs = env["warden"].user.eggs
     haml "eggs/index".to_sym
   end
@@ -36,7 +37,7 @@ class MyApp < Sinatra::Application
     redirect "/eggs", :error => "This egg doesn't belong to you." unless egg.user.id == env['warden'].user.id
     egg.name = params[:name]
     egg.save
-    redirect "/eggs", :notice => "Egg updated."
+    redirect "/eggs/#{egg.id}", :notice => "Egg updated."
   end
 
   delete "/eggs/:id/destroy" do
@@ -88,6 +89,6 @@ class MyApp < Sinatra::Application
     egg.pg_database = db
     egg.dragon = dragon
     egg.save
-    redirect "/eggs", :notice => "Egg updated."
+    redirect "/eggs/#{egg.id}", :notice => "Egg updated."
   end
 end
