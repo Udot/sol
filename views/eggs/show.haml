@@ -1,0 +1,33 @@
+%div.row
+  %div.span8.columns.offset4
+    %h2= @egg.name
+
+%div.row
+  %div.span3.columns.offset4
+    %h3 Status
+  %div.span5.columns
+    %p NC
+%div.row
+  %div.span3.columns.offset4
+    %h3 Status
+  %div.span5.columns
+    %p NC
+%div.row
+  %div.span3.columns.offset4
+    %h3 Repository
+  %div.span5.columns
+    %p= @egg.git_repository.remote_url + " " + @egg.git_repository.updated_status if @egg.git_repository
+%div.row
+  %div.span3.columns.offset4
+    %h3 Server
+  %div.span5.columns
+    %p= @egg.dragon ? @egg.dragon.status : "no server"
+%div.row
+  %div.span3.columns.offset4
+    %h3 IP address
+  %div.span5.columns
+    %p= @egg.dragon.public_address if @egg.dragon
+%div.row
+  %div.actions.span8.columns.offset4
+    %a.btn.small.info{:href => "/eggs/#{@egg.id}/edit"} Edit
+    %a.btn.small.danger{:href => "/eggs/#{@egg.id}/destroy", :"data-confirm" => "Are you sure ?", :"data-method" => "delete", :rel => "nofollow"} Destroy
