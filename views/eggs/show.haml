@@ -14,7 +14,9 @@
           %td= @egg.pg_database ? @egg.pg_database.status : "no db"
         %tr
           %td Repository
-          %td= @egg.git_repository ? @egg.git_repository.updated_status : "no repository"
+          %td
+            = @egg.git_repository ? @egg.git_repository.updated_status : "no repository"
+            = @egg.git_repository ? '(' + @egg.git_repository.remote_url + ')'
         %tr
           %td Server
           %td= @egg.dragon ? @egg.dragon.status : "no server"
