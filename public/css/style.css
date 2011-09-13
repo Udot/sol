@@ -48,3 +48,7 @@ div.login_form {
 div.topbar li {
 	font-size: 12pt;
 }
+
+div.row.status_db {
+	border-bottom: 1px solid #CCC;
+}
