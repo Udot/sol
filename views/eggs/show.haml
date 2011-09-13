@@ -14,12 +14,16 @@
           %td= @egg.pg_database ? @egg.pg_database.status : "no db"
         %tr
           %td Repository
-          %td
-            = @egg.git_repository ? @egg.git_repository.updated_status : "no repository"
-            = @egg.git_repository ? '(' + @egg.git_repository.remote_url + ')'
+          %td= @egg.git_repository ? @egg.git_repository.updated_status + ' (' + @egg.git_repository.remote_url + ')' : "no repository"
         %tr
           %td Server
           %td= @egg.dragon ? @egg.dragon.status : "no server"
         %tr
           %td IP
           %td= @egg.dragon.public_address if @egg.dragon
+%div.row
+  %div.span8.columns.offset2.actions
+    %a.btn.small{:href => "/eggs"} Back
+    %a.btn.small.info{:href => "/eggs/#{@egg.id}/edit"} Edit
+    %a.btn.small.danger{:href => "/eggs/#{@egg.id}/destroy", :"data-confirm" => "Are you sure ?", :"data-method" => "delete", :rel => "nofollow"} Destroy
+      
