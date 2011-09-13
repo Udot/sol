@@ -8,14 +8,14 @@ class Egg
   has 1, :pg_database
 
   property :id, Serial
-  property :name, Text
+  property :name, Text, :unique => true
   property :user_id, Integer
   property :created_at, DateTime
   property :updated_at, DateTime
   # unicorn config
   property :unicorn_workers, Integer                   # unicorn workers qty (default = 2)
   property :unicorn_port, Integer                      # unicorn port
-  property :fqdn, String, :unique => true              # user chosen fqdn
+  property :fqdn, String, :unique => true, :default => proc { generate_fqdn }              # user chosen fqdn
   property :synth_fqdn, String                         # randomly generated fqdn -> need to have an internal DNS
   property :database_done, Boolean, :default => false
 
@@ -60,6 +60,11 @@ class Egg
     config += "\t\tproxy_temp_file_write_size 64k;\n"
     config += "\t}\n"
     config += "}\n"
+  end
+
+  def generate_fqdn
+    name_s = name.gsub(/^\.*/,'').gsub(/\s/,'_').downcase.gsub(/[àáâãäå]/,'a').gsub(/æ/,'ae').gsub(/ç/, 'c').gsub(/[èéêë]/,'e').gsub(/[üùû]/,'u').gsub(/[œ]/, 'oe')
+    return "#{name_s}.#{Settings.domain_name}"
   end
 
   # enqueue in redis db 0 for build
