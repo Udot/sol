@@ -5,6 +5,7 @@ class Egg
   has n, :ssh_keys, :through => Resource
   has 1, :dragon
   has 1, :git_repository
+  has 1, :pg_database
 
   property :id, Serial
   property :name, Text

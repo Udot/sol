@@ -44,6 +44,11 @@ class MyApp < Sinatra::Application
     egg = Egg.get(params[:id])
     redirect "/eggs", :error => "This egg doesn't belong to you." unless egg.user.id == env['warden'].user.id
     destroyed_status = [500, "no git repository linked"]
+    if egg.pg_database
+      db = egg.pg_database
+      db.remote_destroy
+      db.destroy
+    end
     if egg.dragon
       dragon = egg.dragon
       dragon.destroy_remote
@@ -76,7 +81,11 @@ class MyApp < Sinatra::Application
     egg.git_repository.generate_path
     egg.git_repository.remote_setup
     egg.git_repository.remote_status
+    # creating database
+    db = PgDatabase.create(:name => "db_" + egg.git_repository.path, :username => "user_" + egg.git_repository.path, :egg_id => egg.id)
+    db.remote_create
     # linking
+    egg.pg_database = db
     egg.dragon = dragon
     egg.save
     redirect "/eggs", :notice => "Egg updated."
