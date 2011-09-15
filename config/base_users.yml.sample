@@ -1,0 +1,19 @@
+# Base data for creating the first user with the thor task :
+# 'thor setup:user_init'
+user:
+  name: "Thomas Riboulet"
+  email: "riboulet@gmail.com"
+  password: "testtest"
+  password_confirmation: "testtest"
+  login: "mcansky"
+  role: "admin"
+api_user:
+  login: "shell_user"
+pinpin_user:
+  name: "Thomas Riboulet"
+  email: "riboulet@gmail.com"
+  password: "testtest"
+  password_confirmation: "testtest"
+  login: "mcansky"
+  role: "admin"  
+  
