@@ -31,6 +31,7 @@ gem "haml"
 gem "shoulda", "2.11.3", :group => [:development, :test]
 gem "factory_girl", ">= 1.3.3", :group => [:development, :test]
 gem "rspec", ">= 2", :group => [:development, :test]
+gem "rack-test", :group => [:development, :test]
 gem "watchr", :group => [:development, :test]
 
 # Use unicorn as the web server
