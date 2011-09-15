@@ -10,3 +10,5 @@ config/settings/development.yml
 config/settings/production.yml
 lib/tasks/deploy_harry.thor
 config/database.yml
+
+.rvmrc
