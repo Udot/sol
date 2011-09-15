@@ -21,7 +21,7 @@ group :production do
 end
 #gem "resque"
 
-gem "dm-mysql-adapter", :group => [:development, :test]
+gem "dm-sqlite-adapter", :group => [:development, :test]
 
 gem "rails_config"
 
