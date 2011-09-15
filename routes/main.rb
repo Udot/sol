@@ -1,5 +1,5 @@
-class MyApp < Sinatra::Application
 
+class MyApp < Sinatra::Application
     Warden::Manager.serialize_into_session{|user| user.id }
     Warden::Manager.serialize_from_session{|id| User.get(id) }
 

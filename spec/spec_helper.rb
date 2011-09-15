@@ -1,12 +1,14 @@
-require File.join(File.dirname(__FILE__), '..', 'app.rb')
-
-require 'rubygems'
-require 'sinatra'
 require 'rack/test'
-require 'rspec'
 
-set :environment, :test
-
-Rspec.configure do |config|
-  config.before(:each) { DataMapper.auto_migrate! }
+begin 
+  require_relative '../app.rb'
+rescue NameError
+  require File.expand_path('../app.rb', __FILE__)
 end
+
+module RSpecMixin
+  include Rack::Test::Methods
+  def app() MyApp.new end
+end
+
+RSpec.configure { |c| c.include RSpecMixin }
