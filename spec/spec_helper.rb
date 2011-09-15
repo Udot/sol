@@ -12,3 +12,10 @@ module RSpecMixin
 end
 
 RSpec.configure { |c| c.include RSpecMixin }
+
+
+class Logger
+  def write(message)
+
+  end  
+end
