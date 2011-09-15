@@ -36,7 +36,7 @@ class MyApp < Sinatra::Application
     end
 	end
 
-	configure :development do
+	configure :development, :test do
 	  set :server, %w[unicorn thin webrick]
     set :show_exceptions, true
 		set :css_files, MinifyResources::CSS_FILES
