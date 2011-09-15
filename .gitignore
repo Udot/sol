@@ -7,3 +7,4 @@ sinatra.log
 
 .bundle/config
 config/settings/development.yml
+config/settings/production.yml
