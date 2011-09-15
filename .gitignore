@@ -6,3 +6,4 @@ log/*
 sinatra.log
 
 .bundle/config
+config/settings/development.yml
