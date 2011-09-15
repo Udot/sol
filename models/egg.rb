@@ -16,7 +16,7 @@ class Egg
   # unicorn config
   property :unicorn_workers, Integer                   # unicorn workers qty (default = 2)
   property :unicorn_port, Integer                      # unicorn port
-  property :fqdn, String, :unique => true, :default => proc { name.gsub(/^\.*/,'').gsub(/\s/,'_').downcase.gsub(/[àáâãäå]/,'a').gsub(/æ/,'ae').gsub(/ç/, 'c').gsub(/[èéêë]/,'e').gsub(/[üùû]/,'u').gsub(/[œ]/, 'oe') + ".#{Settings.domain_name}" }              # user chosen fqdn
+  property :fqdn, String, :unique => true, :default => proc { Egg.random_fqdn }              # user chosen fqdn
   property :synth_fqdn, String                         # randomly generated fqdn -> need to have an internal DNS
   property :database_done, Boolean, :default => false
 
@@ -77,5 +77,14 @@ class Egg
     queue = JSON.parse(redis_build_queue.get("queue")) if redis_build_queue.get("queue") != nil
     queue << {"name" => name, "repository" => git_repository.remote_url, "db_string" => "something", "cuddy_token" => dragon.token}
     redis_build_queue.set("queue", queue.to_json)
+  end
+
+  def self.random_fqdn
+    seasons = ["winter", "summer", "spring", "autumn"]
+    faeries = ["orc", "troll", "goblin", "titan", "hobbit"]
+    while true
+      name = "#{seasons[rand(5)]}-#{seasons[rand(6)]}#{Egg.count}.#{Settings.domain_name}"
+      return name unless Egg.first(:fqdn => name) != nil
+    end
   end
 end

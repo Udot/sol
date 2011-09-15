@@ -1,0 +1,69 @@
+%div.row
+  %div.span16.columns
+    %h3 Build queue
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th Name
+          %th Repository
+          %th DB string
+          %th Token
+      - if @queues['build'].count > 0
+        - @queues['build'].each do |build|
+          %tbody
+            %tr
+              %td= build['name']
+              %td= build['repository']
+              %td= build['db_string']
+              %td= build['cuddy_token']
+
+%div.row
+  %div.span16.columns
+    %h3 Deploy queue
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th Name
+          %th Version
+          %th DB string
+      - if @queues['deploy'].count > 0
+        - @queues['deploy'].each do |build|
+          %tbody
+            %tr
+              %td= build['data'].to_s
+
+%div.row
+  %div.span16.columns
+    %h3 DB queue
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th Database
+          %th Username
+          %th App
+          %th Action
+          %th DB String
+      - if @queues['db'].count > 0
+        - @queues['db'].each do |build|
+          %tbody
+            %tr
+              %td= build['database']
+              %td= build['username']
+              %td= build['app']
+              %td= build['action']
+              %td= build['token']
+
+%div.row
+  %div.span16.columns
+    %h3 DB status
+    %table.zebra-striped{:style => "margin-bottom: 0;"}
+      %thead
+        %tr
+          %th DB
+          %th Status
+      - if @queues['db_status'].count > 0
+        - @queues['db_status'].each do |build|
+          %tbody
+            %tr
+              %td= build['data']['database']
+              %td= build['data']['status']

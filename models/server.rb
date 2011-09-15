@@ -25,7 +25,7 @@ class Dragon
   property :state, String
   property :progress, Integer
   property :provider_id, Integer, :unique => true
-  property :host_id, Integer, :unique => true
+  property :host_id, String, :unique => true
   property :public_address, String
   property :private_address, String
   # sol operation
@@ -80,11 +80,10 @@ class Dragon
     q_status = redis_status.get(token)
     if q_status != nil
       r_status = JSON.parse(q_status)
-      puts r_status
       self.public_address = r_status['public_ip']
       self.private_address = r_status['private_ip']
       self.provider_id = r_status['provider_id'].to_i unless r_status['provider_id'] == ""
-      self.host_id = r_status['host_id'].to_i unless r_status['host_id'] == ""
+      self.host_id = r_status['host_id'] unless r_status['host_id'] == ""
       self.state = r_status['state']
       self.progress = r_status['progress'].to_i unless r_status['progress'] == ""
       self.image_name = r_status['image_name']
@@ -142,7 +141,7 @@ class Dragon
       :rackspace_username => Settings.rackspace_username,
       :rackspace_auth_url => Settings.rackspace_auth_host)
     remote_server = connection.servers.get(provider_id)
-    remote_server.destroy
+    remote_server.destroy unless remote_server == nil
     redis_status = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.server_status)
     redis_status.del(token)
   end

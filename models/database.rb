@@ -37,23 +37,51 @@ class PgDatabase
     redis = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.db_queue)
     queue = []
     queue = JSON.parse(redis.get("queue")) unless redis.get("queue") == nil
-    queue << {"datetime" => name, "username" => username, "token" => pwd_string, "action" => "create", "app" => egg.git_repository.path}
+    queue << {"database" => name, "username" => username, "token" => pwd_string, "action" => "create", "app" => egg.git_repository.path}
+    redis.set("queue", queue.to_json)
+    self.set_status("queued")
   end
 
   def remote_destroy
     redis = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.db_queue)
     queue = []
     queue = JSON.parse(redis.get("queue")) unless redis.get("queue") == nil
-    queue << {"datetime" => name, "username" => username, "token" => pwd_string, "action" => "destroy", "app" => egg.git_repository.path}
+    queue << {"database" => name, "username" => username, "token" => pwd_string, "action" => "destroy", "app" => egg.git_repository.path}
+    redis.set("queue", queue.to_json)
+    self.set_status("queued for destruction")
   end
 
   def self.update_status
     redis = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.db_queue)
     PgDatabase.each do |db|
-      r_status = redis.get(db.name)
-      status = r_status['status'] unless r_status == nil
-      status = "failing" if r_status == nil
+      begin
+        r_status = JSON.parse(redis.get(db.egg.git_repository.path)) unless redis.get(db.egg.git_repository.path) == nil
+        db.status = r_status['status'] unless r_status == nil
+        db.status = "failing" if r_status == nil
+        db.save
+      rescue
+        db.set_status("unkown")
+        db.status = "unkown"
+        db.save
+      end
     end
+  end
+
+  def to_h
+    return {"database" => name,
+      "username" => username,
+      "passwd_string" => pwd_string}
+  end
+
+  def set_status(msg)
+    redis = Redis.new(:host => Settings.redis.host, :port => Settings.redis.port, :password => Settings.redis.password, :db => Settings.redis.db_queue)
+    n_status = self.to_h
+    begin
+      n_status = JSON.parse(redis.get(egg.git_repository.path))
+    rescue JSON::ParserError
+    end
+    n_status['status'] = msg
+    redis.set(egg.git_repository.path, n_status.to_json)
   end
 
   def random_string

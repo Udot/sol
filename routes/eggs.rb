@@ -77,18 +77,24 @@ class MyApp < Sinatra::Application
     dragon.queue_in
     dragon.get_status
     dragon.save
+    egg.dragon = dragon
+    egg.save
+    logger.info("dragon created")
     # creating repository
     egg.git_repository = GitRepository.create(:name => params[:name], :user_id => env['warden'].user.id, :egg_id => egg.id)
     egg.git_repository.generate_path
     egg.git_repository.remote_setup
     egg.git_repository.remote_status
-    # creating database
-    db = PgDatabase.create(:name => "db_" + egg.git_repository.path, :username => "user_" + egg.git_repository.path, :egg_id => egg.id)
-    db.remote_create
-    # linking
-    egg.pg_database = db
-    egg.dragon = dragon
     egg.save
-    redirect "/eggs/#{egg.id}", :notice => "Egg updated."
+    logger.info("repository created")
+    # creating database
+    egg.pg_database = PgDatabase.create(:name => "db_" + egg.git_repository.path, :username => "user_" + egg.git_repository.path, :egg_id => egg.id)
+    egg.pg_database.remote_create
+    logger.info("database created")
+    if egg.save
+      redirect "/eggs/#{egg.id}", :notice => "Egg created."
+    else
+      redirect "/eggs", :error => "Could not save the Egg properly : #{egg.errors.to_s}"
+    end
   end
 end
