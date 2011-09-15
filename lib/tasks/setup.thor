@@ -11,14 +11,16 @@ require './models/init'
 
 class Setup < Thor
   include Thor::Actions
+  BASE_USER_DATA_FILE = "./config/base_users.yml"
   desc "user_init", "setup the first user"
   def user_init
-		if User.all.count == 0
-      a_user = User.create(:name => "Thomas Riboulet", :email => "riboulet@gmail.com", :password => "testtest", :password_confirmation => "testtest", :login => "mcansky", :role => "admin")
+    if User.all.count == 0
+      user_data = YAML.load_file(BASE_USER_DATA_FILE)
+      a_user = User.create( user_data['user'] )
       a_user.save
     end
     if ApiUser.count == 0
-      an_auser = ApiUser.create(:login => "shell_user")
+      an_auser = ApiUser.create( user_data['api_user'] )
     end
   end
 
