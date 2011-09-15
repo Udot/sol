@@ -10,7 +10,7 @@ class MyApp < Sinatra::Application
       return
     end
     if params[:username] && params[:repository]
-      user = User.get(:login => params[:username])
+      user = User.first(:login => params[:username])
       git_repository = GitRepository.first(:path => params[:repository].gsub(/\.git$/,''))
       if git_repository.user == user
         # repository owned by that user : ok
