@@ -6,9 +6,9 @@ log/*
 sinatra.log
 
 .bundle/config
-config/settings/development.yml
-config/settings/production.yml
+config/settings/*.yml
 lib/tasks/deploy_harry.thor
 config/database.yml
 
 .rvmrc
+db

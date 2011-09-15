@@ -1,0 +1,40 @@
+jup_sh:
+  user_home: /tmp
+  user_name: jup_git
+  environment: production
+repos:
+  root_dir: /tmp/gits
+  repo_user: jup_git
+git:
+  repo_path: git
+  host: localhost
+  shell: /opt/local/bin/git-shell
+shell:
+  path: /var/opt/jupiler/jupiler-sh.sh
+logs:
+  email: email.log
+  scm: scm.log
+  jup_sh: jup_sh.log
+mercure_api:
+  token: themercureapitokenvalue
+  username: jupiter_sands
+  ssl: false
+  host: localhost
+  port: 8082
+remote_log_host: 31.222.188.130
+remote_log_port: 514
+db_token: thedbtokenvalue
+redis:
+  host: "0.0.0.0"
+  port: 6379
+  password: "redis_secret_password"
+  build_queue: 0
+  deploy_queue: 1
+  db_queue: 2
+  app_status: 3
+  server_queue: 4
+  server_status: 5
+basename: "uchikoma"
+rackspace_auth_url: "https://lon.auth.api.rackspacecloud.com/v1.0"
+rackspace_api_key: "someapikey"
+rackspace_username: "oneuser"
