@@ -13,7 +13,6 @@ end
 describe 'MyApp' do
 
   it 'should run a simple test' do
-    puts app
     get '/'
     last_response.status.should == 200
   end
