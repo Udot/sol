@@ -1,14 +1,21 @@
-require File.dirname(__FILE__) + '/spec_helper'
+begin 
+  require_relative 'spec_helper'
+rescue NameError
+  require File.expand_path('spec_helper', __FILE__)
+end
 
-describe 'App' do
-  include Rack::Test::Methods
+class Logger
+  def write(message)
 
-  def app
-    Sinatra::Application
-  end
+  end  
+end  
+
+describe 'MyApp' do
 
   it 'should run a simple test' do
+    puts app
     get '/'
     last_response.status.should == 200
   end
+
 end

@@ -1,7 +1,7 @@
 # encoding: utf-8
 require_relative "../lib/remote_syslog" if settings.environment.to_s == "production"
-DataMapper::Logger.new($stdout, :debug) if settings.environment.to_s == "development"
-DataMapper::Logger.new(RemoteSyslog.new(Settings.remote_log_host,Settings.remote_log_port), :info) if settings.environment.to_s == "development"
+DataMapper::Logger.new($stdout, :debug) unless settings.environment.to_s == "production"
+DataMapper::Logger.new(RemoteSyslog.new(Settings.remote_log_host,Settings.remote_log_port), :info) if settings.environment.to_s == "production"
 
 # load db config
 db_config = YAML.load_file("./config/database.yml")[settings.environment.to_s]
