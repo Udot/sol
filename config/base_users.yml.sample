@@ -10,10 +10,7 @@ user:
 api_user:
   login: "shell_user"
 pinpin_user:
-  name: "Thomas Riboulet"
-  email: "riboulet@gmail.com"
-  password: "testtest"
-  password_confirmation: "testtest"
-  login: "mcansky"
-  role: "admin"  
-  
+  login: "pinpin"
+  name: "pinpin"
+  email: "pinpin@something.com"
+  role: "normal"

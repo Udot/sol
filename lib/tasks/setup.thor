@@ -15,25 +15,30 @@ class Setup < Thor
   desc "user_init", "setup the first user"
   def user_init
     if User.all.count == 0
-      user_data = YAML.load_file(BASE_USER_DATA_FILE)
-      a_user = User.create( user_data['user'] )
+      a_user = User.create( load_user_data :user )
       a_user.save
     end
     if ApiUser.count == 0
-      an_auser = ApiUser.create( user_data['api_user'] )
+      an_auser = ApiUser.create( load_user_data :api_user )
     end
   end
 
   desc "pinpin_init", "setup a user for pinpin"
   def pinpin_init
-    user = User.get(:login => "pinpin")
+    userdata = load_user_data :pinpin_user
+    user = User.get(:login => userdata['login'])
     if user == nil
       rand_string = ""
       42.times { rand_string += (0..9).to_a[rand(10)].to_s }
       pass_string = Digest::SHA1::hexdigest(Time.now.to_s + rand_string)
-      user = User.create(:name => "pinpin", :email => "pinpin@something", :password => pass_string, :password_confirmation => pass_string, :login => "pinpin", :role => "normal")
-      user.save
+      userdata = userdata.merge({:password => pass_string, :password_confirmation => pass_string})
+      user = User.create( userdata )
+      user.save!
     end
   end
-  
+  protected
+  def load_user_data userkey
+    user_data ||= YAML.load_file(BASE_USER_DATA_FILE)
+    user_data[ userkey.to_s ]
+  end  
 end
