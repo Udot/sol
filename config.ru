@@ -1,12 +1,14 @@
+require "fileutils"
 require ::File.join( ::File.dirname(__FILE__), 'app' )
 if ENV['RACK_ENV'] == "production"
-  require "remote_syslog_logger"
   @current_path = File.expand_path(File.dirname(__FILE__))
-  require "#{@current_path}/lib/remote_syslog"
-
-  use Rack::CommonLogger, RemoteSyslog.new(Settings.remote_log_host,Settings.remote_log_port)
+  require "#{@current_path}/lib/simple_logger"
+  use Rack::CommonLogger, SimpleLogger.new
+  logger.info("Starting RACK")
 else
-  logger = Logger.new("log/#{ENV['RACK_ENV']}.log")
-	use Rack::CommonLogger, logger
+  FileUtils.mkdir("log") unless File.exist?("log")
+  logger = SimpleLogger.new("log/#{ENV['RACK_ENV']}.log")
+  use Rack::CommonLogger, logger
+  logger.info("Starting RACK")
 end
 run MyApp.new
