@@ -1,0 +1,16 @@
+%div.row
+  %div.span12.columns
+    %h2 Builder user
+
+%div.row
+  %div.span6.columns
+    %form{:action => "/builder", :method => "post"}
+      %fieldset
+        %legend Enter the ssh key :
+        .clearfix
+          %label{:for => ""} Ssh Key
+          .input
+            %input{:name => "ssh_key", :type => "text", :value => @builder.ssh_keys.count > 0 ? @builder.ssh_keys.first.ssh_key : ""}/
+        / /clearfix
+        .actions
+          %button#submit_user.btn.primary{:type => "submit"}> Update the key

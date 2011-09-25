@@ -16,10 +16,10 @@ class User
   property :role, String, :default => proc { User.default_role } # "admin" or "normal"
 
   attr_accessor :password, :password_confirmation, :password_reset
-  
+
   validates_presence_of :password, :password_confirmation, :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?
-  
+  #
   #before :valid?, :crypted_pass
 
   has n, :eggs

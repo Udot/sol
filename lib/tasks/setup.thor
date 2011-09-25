@@ -15,17 +15,17 @@ class Setup < Thor
   desc "user_init", "setup the first user"
   def user_init
     if User.all.count == 0
-      a_user = User.create( load_user_data :user )
+      a_user = User.create( load_user_data(:user) )
       a_user.save
     end
     if ApiUser.count == 0
-      an_auser = ApiUser.create( load_user_data :api_user )
+      an_auser = ApiUser.create( load_user_data(:api_user) )
     end
   end
 
   desc "pinpin_init", "setup a user for pinpin"
   def pinpin_init
-    userdata = load_user_data :pinpin_user
+    userdata = load_user_data(:pinpin_user)
     user = User.get(:login => userdata['login'])
     if user == nil
       rand_string = ""
@@ -37,8 +37,8 @@ class Setup < Thor
     end
   end
   protected
-  def load_user_data userkey
+  def load_user_data(userkey)
     user_data ||= YAML.load_file(BASE_USER_DATA_FILE)
     user_data[ userkey.to_s ]
-  end  
+  end
 end
