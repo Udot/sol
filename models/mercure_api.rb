@@ -43,7 +43,7 @@ module MercureApi
     end
     return false
   end
-  
+
   def get(request)
     http_r = Net::HTTP.new(Settings.mercure_api.host, Settings.mercure_api.port)
     http_r.use_ssl = Settings.mercure_api.ssl

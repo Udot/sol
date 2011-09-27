@@ -31,6 +31,15 @@ class MyApp < Sinatra::Application
                   :password => pass_string, :password_confirmation => pass_string)
       redirect "/", :error => "could not create builder user" unless @builder.save
     end
+    @git = User.first(:login => "git")
+    if @git == nil
+      42.times { rand_string += (0..9).to_a[rand(10)].to_s }
+      pass_string = Digest::SHA1::hexdigest(Time.now.to_s + rand_string)
+      @git = User.create(:login => "git", :email => "git@no.where",
+                         :role => "normal", :name => "git",
+                         :password => pass_string, :password_confirmation => pass_string)
+      redirect "/", :error => "could not create git user" unless @git.save
+    end
     haml "private/builder".to_sym
   end
 
@@ -43,6 +52,14 @@ class MyApp < Sinatra::Application
     ssh_key = SshKey.create(:name => "default", :ssh_key => params[:ssh_key], :deploy => true)
     builder.ssh_keys.each { |sk| sk.destroy }
     ssh_key.user = builder
+    ssh_key.save
+    git = User.first(:login => "git")
+    if git == nil
+      redirect "/builder", :error => "could not find git user"
+    end
+    # git key
+    ssh_key = SshKey.create(:name => "default", :ssh_key => params[:ssh_key], :deploy => true)
+    ssh_key.user = git
     ssh_key.save
     redirect "/builder".to_sym
   end
