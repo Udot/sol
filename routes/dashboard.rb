@@ -29,16 +29,27 @@ class MyApp < Sinatra::Application
       @builder = User.create(:login => "pinpin", :email => "pinpin@no.where",
                   :role => "normal", :name => "pinpin",
                   :password => pass_string, :password_confirmation => pass_string)
-      redirect "/", :error => "could not create builder user" unless @builder.save
+      if @builder.save
+        logger.info("builder user saved")
+      else
+        logger.error("could not save builder user")
+        redirect "/", :error => "could not create builder user"
+      end
     end
     @git = User.first(:login => "git")
     if @git == nil
+      rand_string = ""
       42.times { rand_string += (0..9).to_a[rand(10)].to_s }
       pass_string = Digest::SHA1::hexdigest(Time.now.to_s + rand_string)
       @git = User.create(:login => "git", :email => "git@no.where",
                          :role => "normal", :name => "git",
                          :password => pass_string, :password_confirmation => pass_string)
-      redirect "/", :error => "could not create git user" unless @git.save
+      if @git.save
+        logger.info("user git was saved")
+      else
+        logger.error("can't save git user\n#{@git.errors.each { |d| d.to_s } }")
+        redirect "/", :error => "could not create git user"
+      end
     end
     haml "private/builder".to_sym
   end

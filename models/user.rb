@@ -11,7 +11,7 @@ class User
   property :crypted_pass, String, :length => 60..60, :required => true, :writer => :protected
   property :name, String, :required => true, :length => 3..30, :message => "Your name must not be blank and at least 3 characters."
   property :created_at, DateTime, :default => proc { DateTime.now }
-  property :login, String, :unique => true, :required => true, :length => 4..15, :message => "Your login must not be blank and at least 4 characters long.", :unique_index => true
+  property :login, String, :unique => true, :required => true, :length => 3..15, :message => "Your login must not be blank and at least 4 characters long.", :unique_index => true
   property :token, String, :unique => true, :default => proc { User.generate_token }
   property :role, String, :default => proc { User.default_role } # "admin" or "normal"
 
